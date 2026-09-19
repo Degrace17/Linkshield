@@ -182,27 +182,28 @@ function checkLink() {
     if (foundWords.length > 0) {
       warnings++;
     }
+if (warnings === 0) {
+  result.innerHTML =
+    "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
+    "🟢 Status: No obvious warning signs detected<br>" +
+    "Risk indicators: 0<br><br>" +
+    "HTTPS: ✅ Secure connection<br>" +
+    "IP address: ✅ Normal domain<br>" +
+    "Suspicious words: ✅ None detected<br>" +
+    "URL length: ✅ Normal<br>" +
+    "@ symbol: ✅ None detected";
 
-    if (warnings === 0) {
-      result.innerHTML =
-        "🟢 No obvious warning signs detected.<br>" +
-        "Risk indicators found: 0";
-      result.style.color = "green";
+  result.style.color = "green";
 
-    } else if (warnings === 1) {
-      result.innerHTML =
-        "🟡 Caution — 1 warning sign detected.<br>" +
-        "Risk indicators found: 1";
-      result.style.color = "orange";
+} else {
+  result.innerHTML =
+    "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
+    "🟡 Status: Caution<br>" +
+    "Risk indicators detected: " + warnings + "<br><br>" +
+    "Please review this link carefully before continuing.";
 
-    } else {
-      result.innerHTML =
-        "🔴 Caution — " + warnings +
-        " warning signs detected.<br>" +
-        "Risk indicators found: " + warnings;
-      result.style.color = "red";
-    }
-
+  result.style.color = "orange";
+}
   } catch (error) {
     result.innerHTML =
       "❌ This does not appear to be a valid link.";
