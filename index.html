@@ -136,14 +136,46 @@ function checkLink() {
     return;
   }
 
-  if (link.startsWith("https://")) {
-    result.innerHTML = "🛡️ LinkShield: This link uses HTTPS.";
-    result.style.color = "green";
-  } else {
-    result.innerHTML = "⚠️ LinkShield: Be careful! This link does not use HTTPS.";
+  try {
+    const url = new URL(link);
+
+    const suspiciousWords = [
+      "login",
+      "verify",
+      "password",
+      "account",
+      "bank",
+      "secure",
+      "update",
+      "confirm"
+    ];
+
+    const foundWords = suspiciousWords.filter(word =>
+      url.href.toLowerCase().includes(word)
+    );
+
+    if (url.protocol !== "https:") {
+      result.innerHTML =
+        "🚨 Warning: This link does not use HTTPS.";
+      result.style.color = "red";
+    } else if (foundWords.length > 0) {
+      result.innerHTML =
+        "⚠️ Warning: This link contains suspicious words: " +
+        foundWords.join(", ");
+      result.style.color = "orange";
+    } else {
+      result.innerHTML =
+        "🛡️ No obvious warning signs detected.<br>" +
+        "This does not guarantee that the link is safe.";
+      result.style.color = "green";
+    }
+
+  } catch (error) {
+    result.innerHTML = "❌ This does not appear to be a valid link.";
     result.style.color = "red";
   }
 }
+
   
   </script>
   
