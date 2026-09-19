@@ -84,8 +84,8 @@
     <div id="result"></div>
 
   </div>
-
-  <scfunction checkLink() {
+<script>
+  function checkLink() {
     const link = document.getElementById("linkInput").value.trim();
     const result = document.getElementById("result");
 
@@ -138,9 +138,15 @@
         result.innerHTML =
             "✅ <strong>No obvious warning signs detected.</strong><br><br>" +
             "This does not guarantee that the link is safe.";
+    } else {
+        result.innerHTML =
+            "✅ <strong>No obvious warning signs detected.</strong><br><br>" +
+            "This does not guarantee that the link is safe.";
     
-}HTML
+}
+}
   </script>
+  
 
 </body>
 </html>
