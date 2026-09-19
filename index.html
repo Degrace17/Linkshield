@@ -159,7 +159,7 @@ function checkLink() {
 
     const isIpAddress = ipAddressPattern.test(url.href);
     const hasAtSymbol = url.href.includes("@");
-
+const isVeryLong = url.href.length > 150;
     if (url.protocol !== "https:") {
       result.innerHTML =
         "🚨 Warning: This link does not use HTTPS.";
@@ -174,7 +174,10 @@ function checkLink() {
       result.innerHTML =
         "⚠️ Warning: This link contains an @ symbol.";
       result.style.color = "orange";
-
+} else if (isVeryLong) {
+  result.innerHTML =
+    "⚠️ Warning: This link is unusually long.";
+  result.style.color = "orange";
     } else if (foundWords.length > 0) {
       result.innerHTML =
         "⚠️ Warning: This link contains suspicious words: " +
