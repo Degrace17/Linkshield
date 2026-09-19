@@ -144,7 +144,7 @@ function checkLink() {
       "verify",
       "password",
       "account",
-      "bank",
+     "bank",
       "secure",
       "update",
       "confirm"
@@ -159,36 +159,48 @@ function checkLink() {
 
     const isIpAddress = ipAddressPattern.test(url.href);
     const hasAtSymbol = url.href.includes("@");
-const isVeryLong = url.href.length > 150;
+    const isVeryLong = url.href.length > 150;
+
+    let warnings = 0;
+
     if (url.protocol !== "https:") {
-      result.innerHTML =
-        "🚨 Warning: This link does not use HTTPS.";
-      result.style.color = "red";
+      warnings++;
+    }
 
-    } else if (isIpAddress) {
-      result.innerHTML =
-        "⚠️ Warning: This link uses an IP address instead of a normal domain.";
-      result.style.color = "orange";
+    if (isIpAddress) {
+      warnings++;
+    }
 
-    } else if (hasAtSymbol) {
+    if (hasAtSymbol) {
+      warnings++;
+    }
+
+    if (isVeryLong) {
+      warnings++;
+    }
+
+    if (foundWords.length > 0) {
+      warnings++;
+    }
+
+    if (warnings === 0) {
       result.innerHTML =
-        "⚠️ Warning: This link contains an @ symbol.";
-      result.style.color = "orange";
-} else if (isVeryLong) {
-  result.innerHTML =
-    "⚠️ Warning: This link is unusually long.";
-  result.style.color = "orange";
-    } else if (foundWords.length > 0) {
+        "🟢 No obvious warning signs detected.<br>" +
+        "Risk indicators found: 0";
+      result.style.color = "green";
+
+    } else if (warnings === 1) {
       result.innerHTML =
-        "⚠️ Warning: This link contains suspicious words: " +
-        foundWords.join(", ");
+        "🟡 Caution — 1 warning sign detected.<br>" +
+        "Risk indicators found: 1";
       result.style.color = "orange";
 
     } else {
       result.innerHTML =
-        "🛡️ No obvious warning signs detected.<br>" +
-        "This does not guarantee that the link is safe.";
-      result.style.color = "green";
+        "🔴 Caution — " + warnings +
+        " warning signs detected.<br>" +
+        "Risk indicators found: " + warnings;
+      result.style.color = "red";
     }
 
   } catch (error) {
