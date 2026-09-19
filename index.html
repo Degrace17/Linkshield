@@ -6,58 +6,75 @@
   <title>LinkShield</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1220;
-      color: white;
-      text-align: center;
-    }
+  * {
+    box-sizing: border-box;
+}
 
-    .container {
-      padding: 40px 20px;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
 
-    h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
+.container {
+    width: 90%;
+    max-width: 420px;
+    margin: 40px auto;
+    background: white;
+    padding: 28px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
 
-    p {
-      color: #aab4c3;
-      font-size: 18px;
-    }
+.logo {
+    font-size: 48px;
+    margin-bottom: 5px;
+}
 
-    .shield {
-      font-size: 80px;
-      margin: 30px 0;
-    }
+h1 {
+    margin: 0;
+    font-size: 32px;
+}
 
-    input {
-      width: 90%;
-      max-width: 500px;
-      padding: 16px;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-      margin-top: 20px;
-    }
+.subtitle {
+    color: #687386;
+    margin-bottom: 25px;
+}
 
-    button {
-      margin-top: 15px;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      background: #2563eb;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-    }
+input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #d5dce7;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+}
 
-    #result {
-      margin-top: 25px;
-      font-size: 18px;
-    }
+button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #172033;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #f4f7fb;
+    line-height: 1.6;
+}
   </style>
 </head>
 
