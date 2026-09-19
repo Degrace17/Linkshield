@@ -6,62 +6,80 @@
   <title>LinkShield</title>
 
   <style>
-  * {
+* {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #e8eef7;
-    color: #172033;
+    background: #07152f;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
     width: 90%;
-    max-width: 420px;
-    margin: 40px auto;
-    background: white;
-    padding: 28px 20px;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    max-width: 430px;
+    background: #0d2145;
+    padding: 30px 22px;
+    border-radius: 24px;
+    border: 1px solid #1d4075;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
     text-align: center;
 }
 
 .logo {
-    font-size: 48px;
+    font-size: 55px;
     margin-bottom: 5px;
 }
 
 h1 {
     margin: 0;
-    font-size: 32px;
+    font-size: 34px;
+    letter-spacing: 1px;
 }
 
 .subtitle {
-    color: #687386;
-    margin-bottom: 25px;
+    color: #a9bddb;
+    margin: 8px 0 28px;
+    font-size: 15px;
 }
 
 input {
     width: 100%;
-    padding: 15px;
-    border: 1px solid #d5dce7;
+    padding: 16px;
+    border: 1px solid #31598e;
     border-radius: 12px;
+    background: #071a38;
+    color: white;
     font-size: 16px;
     outline: none;
+}
+
+input::placeholder {
+    color: #7188aa;
+}
+
+input:focus {
+    border-color: #4d8fe8;
+    box-shadow: 0 0 0 3px rgba(77, 143, 232, 0.15);
 }
 
 button {
     width: 100%;
     margin-top: 15px;
-    padding: 15px;
+    padding: 16px;
     border: none;
     border-radius: 12px;
-    background: #172033;
+    background: #1769e0;
     color: white;
     font-size: 17px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 button:active {
@@ -69,13 +87,16 @@ button:active {
 }
 
 #result {
-    margin-top: 20px;
-    padding: 15px;
+    margin-top: 22px;
+    padding: 16px;
     border-radius: 12px;
-    background: #f4f7fb;
+    background: #071a38;
+    border: 1px solid #1d4075;
+    color: #dce8f8;
     line-height: 1.6;
+    text-align: left;
 }
-  </style>
+</style>
 </head>
 
 <body>
