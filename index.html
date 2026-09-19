@@ -128,109 +128,107 @@ button:active {
   Your security report will appear here.
   </div>
     </div>
+<script>
+  function checkLink() {
+    const link = document.getElementById("linkInput").value.trim();
+    const result = document.getElementById("result");
 
-  <script>
-    function checkLink() {
-      const link = document.getElementById("linkInput").value.trim();
-      const result = document.getElementById("result");
-
-      if (link === "") {
-        result.innerHTML = "⚠️ Please enter a link first.";
-        result.style.color = "orange";
-        return;
-      }
-
-      try {
-        const url = new URL(link);
-
-        const suspiciousWords = [
-          "login",
-          "verify",
-          "password",
-          "account",
-          "bank",
-          "secure",
-          "update",
-          "confirm"
-        ];
-
-        const foundWords = suspiciousWords.filter(word =>
-          url.href.toLowerCase().includes(word)
-        );
-
-        const ipAddressPattern =
-          /^https?:\/\/(\d{1,3}\.){3}\d{1,3}/;
-
-        const isIpAddress = ipAddressPattern.test(url.href);
-        const hasAtSymbol = url.href.includes("@");
-        const isVeryLong = url.href.length > 150;
-
-        let warnings = 0;
-        let reasons = [];
-
-        if (url.protocol !== "https:") {
-          warnings++;
-          reasons.push("⚠️ This link does not use HTTPS.");
-        }
-
-        if (isIpAddress) {
-          warnings++;
-          reasons.push(
-            "⚠️ This link uses an IP address instead of a normal domain."
-          );
-        }
-
-        if (hasAtSymbol) {
-          warnings++;
-          reasons.push("⚠️ This link contains an @ symbol.");
-        }
-
-        if (isVeryLong) {
-          warnings++;
-          reasons.push("⚠️ This link is unusually long.");
-        }
-
-        if (foundWords.length > 0) {
-          warnings++;
-          reasons.push(
-            "⚠️ Suspicious words detected: " + foundWords.join(", ")
-          );
-        }
-
-        if (warnings === 0) {
-          result.innerHTML =
-            "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-            "🟢 Status: No obvious warning signs detected<br>" +
-            "Risk indicators: 0<br><br>" +
-            "HTTPS: ✅ Present<br>" +
-            "IP address: ✅ Normal domain<br>" +
-            "Suspicious words: ✅ None detected<br>" +
-            "URL length: ✅ Normal<br>" +
-            "@ symbol: ✅ None detected";
-
-          result.style.color = "green";
-
-        } else {
-          result.innerHTML =
-            "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-            "🟡 Status: Caution<br>" +
-            "Risk indicators detected: " + warnings + "<br><br>" +
-            "<strong>Why this link was flagged:</strong><br>" +
-            reasons.join("<br>") +
-            "<br><br>" +
-            "Please review this link carefully before continuing.";
-
-          result.style.color = "orange";
-        }
-
-      } catch (error) {
-        result.innerHTML =
-          "❌ This does not appear to be a valid link.";
-        result.style.color = "red";
-      }
+    if (link === "") {
+      result.innerHTML = "⚠️ Please enter a link first.";
+      result.style.color = "orange";
+      return;
     }
-  </script>
 
+    try {
+      const url = new URL(link);
+
+      const suspiciousWords = [
+        "login",
+        "verify",
+        "password",
+        "account",
+        "bank",
+        "secure",
+        "update",
+        "confirm"
+      ];
+
+      const foundWords = suspiciousWords.filter(word =>
+        url.href.toLowerCase().includes(word)
+      );
+
+      const ipAddressPattern =
+        /^https?:\/\/(\d{1,3}\.){3}\d{1,3}/;
+
+      const isIpAddress = ipAddressPattern.test(url.href);
+      const hasAtSymbol = url.href.includes("@");
+      const isVeryLong = url.href.length > 150;
+
+      let warnings = 0;
+      let reasons = [];
+
+      if (url.protocol !== "https:") {
+        warnings++;
+        reasons.push("⚠️ This link does not use HTTPS.");
+      }
+
+      if (isIpAddress) {
+        warnings++;
+        reasons.push(
+          "⚠️ This link uses an IP address instead of a normal domain."
+        );
+      }
+
+      if (hasAtSymbol) {
+        warnings++;
+        reasons.push("⚠️ This link contains an @ symbol.");
+      }
+
+      if (isVeryLong) {
+        warnings++;
+        reasons.push("⚠️ This link is unusually long.");
+      }
+
+      if (foundWords.length > 0) {
+        warnings++;
+        reasons.push(
+          "⚠️ Suspicious words detected: " + foundWords.join(", ")
+        );
+      }
+
+      if (warnings === 0) {
+        result.innerHTML =
+          "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
+          "🟢 Status: No obvious warning signs detected<br>" +
+          "Risk indicators: 0<br><br>" +
+          "HTTPS: ✅ Present<br>" +
+          "IP address: ✅ Normal domain<br>" +
+          "Suspicious words: ✅ None detected<br>" +
+          "URL length: ✅ Normal<br>" +
+          "@ symbol: ✅ None detected";
+
+        result.style.color = "green";
+
+      } else {
+        result.innerHTML =
+          "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
+          "🟡 Status: Caution<br>" +
+          "Risk indicators detected: " + warnings + "<br><br>" +
+          "<strong>Why this link was flagged:</strong><br>" +
+          reasons.join("<br>") +
+          "<br><br>" +
+          "Please review this link carefully before continuing.";
+
+        result.style.color = "orange";
+      }
+
+    } catch (error) {
+      result.innerHTML =
+        "❌ This does not appear to be a valid link.";
+      result.style.color = "red";
+    }
+  }
+</script>
 </body>
 </html>
   
