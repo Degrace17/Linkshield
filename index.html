@@ -53,13 +53,23 @@ h1 {
 
 input {
     width: 100%;
-    padding: 16px;
+    padding: 17px;
     border: 1px solid #31598e;
-    border-radius: 12px;
-    background: #071a38;
+    border-radius: 14px;
+    background: #06162f;
     color: white;
     font-size: 16px;
     outline: none;
+    transition: 0.2s;
+}
+
+input::placeholder {
+    color: #7188aa;
+}
+
+input:focus {
+    border-color: #1769e0;
+    box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.18);
 }
 
 input::placeholder {
@@ -70,20 +80,24 @@ input:focus {
     border-color: #4d8fe8;
     box-shadow: 0 0 0 3px rgba(77, 143, 232, 0.15);
 }
-
 button {
     width: 100%;
     margin-top: 15px;
-    padding: 16px;
+    padding: 17px;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
     background: #1769e0;
     color: white;
     font-size: 17px;
     font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 6px 18px rgba(23, 105, 224, 0.35);
+    transition: 0.2s;
 }
 
+button:active {
+    transform: scale(0.97);
+}
 button:active {
     transform: scale(0.98);
 }
