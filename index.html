@@ -125,64 +125,26 @@ button:active {
 
     <div id="result"></div>
 
-  </div>
-<script>
-  function checkLink() {
-    const link = document.getElementById("linkInput").value.trim();
-    const result = document.getElementById("result");
+  <script>
+function checkLink() {
+  const link = document.getElementById("linkInput").value.trim();
+  const result = document.getElementById("result");
 
-    if (link === "") {
-        result.innerHTML = "⚠️ Please enter a link.";
-        return;
-    }
+  if (link === "") {
+    result.innerHTML = "⚠️ Please enter a link first.";
+    result.style.color = "orange";
+    return;
+  }
 
-    let score = 0;
-    let warnings = [];
-
-    if (!link.startsWith("https://")) {
-        score += 2;
-        warnings.push("The link does not use HTTPS.");
-    }
-
-    if (link.includes("@")) {
-        score += 3;
-        warnings.push("The link contains an @ symbol.");
-    }
-
-    if (
-        link.includes("bit.ly") ||
-        link.includes("tinyurl") ||
-        link.includes("t.co")
-    ) {
-        score += 2;
-        warnings.push("This is a shortened link.");
-    }
-
-    if (
-        link.includes("login") ||
-        link.includes("verify") ||
-        link.includes("account") ||
-        link.includes("password")
-    ) {
-        score += 2;
-        warnings.push("The link contains words commonly used in phishing links.");
-    }
-
-    if (score >= 5) {
-        result.innerHTML =
-            "🚨 <strong>Potentially Suspicious</strong><br><br>" +
-            warnings.join("<br>");
-    } else if (score >= 2) {
-        result.innerHTML =
-            "⚠️ <strong>Use Caution</strong><br><br>" +
-            warnings.join("<br>");
-    } else {
-        result.innerHTML =
-            "✅ <strong>No obvious warning signs detected.</strong><br><br>" +
-            "This does not guarantee that the link is safe.";
-    
+  if (link.startsWith("https://")) {
+    result.innerHTML = "🛡️ LinkShield: This link uses HTTPS.";
+    result.style.color = "green";
+  } else {
+    result.innerHTML = "⚠️ LinkShield: Be careful! This link does not use HTTPS.";
+    result.style.color = "red";
+  }
 }
-}
+  
   </script>
   
 
