@@ -19,16 +19,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .container {
-    width: 90%;
+    width: 100%;
     max-width: 430px;
     background: #0d2145;
-    padding: 30px 22px;
+    padding: 32px 22px;
     border-radius: 24px;
-    border: 1px solid #1d4075;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+    border: 1px solid #24518c;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
     text-align: center;
 }
 
@@ -37,16 +38,16 @@ body {
     margin-bottom: 10px;
     filter: drop-shadow(0 0 12px rgba(23, 105, 224, 0.7));
 }
+
 h1 {
     margin: 0;
     font-size: 34px;
     letter-spacing: 1px;
     font-weight: 700;
-    text-shadow: 0 0 12px rgba(23, 105, 224, 0.4);
 }
 
 .subtitle {
-    color: #a9bddb;
+    color: #9eb6d8;
     margin: 8px 0 28px;
     font-size: 15px;
 }
@@ -60,7 +61,6 @@ input {
     color: white;
     font-size: 16px;
     outline: none;
-    transition: 0.2s;
 }
 
 input::placeholder {
@@ -72,14 +72,6 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.18);
 }
 
-input::placeholder {
-    color: #7188aa;
-}
-
-input:focus {
-    border-color: #4d8fe8;
-    box-shadow: 0 0 0 3px rgba(77, 143, 232, 0.15);
-}
 button {
     width: 100%;
     margin-top: 15px;
@@ -92,27 +84,23 @@ button {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 6px 18px rgba(23, 105, 224, 0.35);
-    transition: 0.2s;
 }
 
 button:active {
     transform: scale(0.97);
 }
-button:active {
-    transform: scale(0.98);
-}
 
 #result {
     margin-top: 22px;
     padding: 16px;
-    border-radius: 12px;
-    background: #071a38;
-    border: 1px solid #1d4075;
+    border-radius: 14px;
+    background: #06162f;
+    border: 1px solid #24518c;
     color: #dce8f8;
     line-height: 1.6;
     text-align: left;
 }
-</style>
+  </style>
 </head>
 
 <body>
