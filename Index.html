@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkShield</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1220;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #aab4c3;
+      font-size: 18px;
+    }
+
+    .shield {
+      font-size: 80px;
+      margin: 30px 0;
+    }
+
+    input {
+      width: 90%;
+      max-width: 500px;
+      padding: 16px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    #result {
+      margin-top: 25px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="shield">🛡️</div>
+
+    <h1>LinkShield</h1>
+
+    <p>Protect yourself from dangerous links.</p>
+
+    <input
+      id="linkInput"
+      type="text"
+      placeholder="Paste a link here..."
+    >
+
+    <br>
+
+    <button onclick="checkLink()">Check Link</button>
+
+    <div id="result"></div>
+
+  </div>
+
+  <script>
+    function checkLink() {
+      const link = document.getElementById("linkInput").value;
+      const result = document.getElementById("result");
+
+      if (link.trim() === "") {
+        result.innerHTML = "⚠️ Please enter a link.";
+        return;
+      }
+
+      result.innerHTML = "🔎 Link received. Security analysis coming next...";
+    }
+  </script>
+
+</body>
+</html>
