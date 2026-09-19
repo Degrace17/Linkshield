@@ -153,12 +153,19 @@ function checkLink() {
     const foundWords = suspiciousWords.filter(word =>
       url.href.toLowerCase().includes(word)
     );
+const ipAddressPattern =
+  /^https?:\/\/(\d{1,3}\.){3}\d{1,3}/;
 
+const isIpAddress = ipAddressPattern.test(url.href);
     if (url.protocol !== "https:") {
       result.innerHTML =
         "🚨 Warning: This link does not use HTTPS.";
       result.style.color = "red";
-    } else if (foundWords.length > 0) {
+    } else if (isIpAddress) {
+  result.innerHTML =
+    "⚠️ Warning: This link uses an IP address instead of a normal domain.";
+  result.style.color = "orange";
+} else if (foundWords.length > 0) {
       result.innerHTML =
         "⚠️ Warning: This link contains suspicious words: " +
         foundWords.join(", ");
