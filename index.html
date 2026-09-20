@@ -180,13 +180,19 @@ if (url.protocol !== "https:") {
 
   actions.push("🔐 Avoid entering passwords or payment information.");
 }
-      if (isIpAddress) {
-        warnings++;
-        reasons.push(
-          "⚠️ This link uses an IP address instead of a normal domain."
-        );
-      }
+      
+if (isIpAddress) {
+  warnings++;
+  riskScore += 25;
 
+  reasons.push(
+    "⚠️ This link uses a numeric IP address instead of a normal website name."
+  );
+
+  actions.push(
+    "🌐 Make sure you recognize the website before opening or entering personal information."
+  );
+}
       if (hasAtSymbol) {
   warnings++;
   riskScore += 20;
