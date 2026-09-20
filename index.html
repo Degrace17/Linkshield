@@ -186,7 +186,7 @@ const hostnameParts = url.hostname.split(".");
 const isShortenedLink = shortenerDomains.includes(
   url.hostname.toLowerCase()
 );
-if (hostnameParts.length >= 4) {
+if (hostnameParts.length > 4 && !isIpAddress) {
   warnings++;
   riskScore += 15;
 
