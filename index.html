@@ -182,6 +182,20 @@ if (hostnameParts.length >= 4) {
     "🔎 Check the main website name carefully before continuing."
   );
 }
+    const lookAlikePattern = /(paypa1|micros0ft|faceb00k|g00gle|amaz0n)/i;
+
+if (lookAlikePattern.test(url.hostname)) {
+  warnings++;
+  riskScore += 20;
+
+  reasons.push(
+    "⚠️ This domain may be using characters that imitate a familiar website name."
+  );
+
+  actions.push(
+    "🔎 Check the spelling of the website carefully before entering any personal information."
+  );
+}
     if (url.protocol !== "https:") {
       warnings++;
       riskScore += 25;
