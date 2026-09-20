@@ -183,7 +183,7 @@ if (hostnameParts.length >= 4) {
     "🔎 Check the main website name carefully before continuing."
   );
 }
-    const lookAlikeWords = [
+  const lookAlikeWords = [
   "paypa1",
   "micros0ft",
   "faceb00k",
@@ -196,8 +196,6 @@ const hasLookAlike = lookAlikeWords.some(word =>
 );
 
 if (hasLookAlike) {
-
-if (lookAlikePattern.test(url.hostname)) {
   warnings++;
   riskScore += 20;
 
@@ -208,7 +206,7 @@ if (lookAlikePattern.test(url.hostname)) {
   actions.push(
     "🔎 Check the spelling of the website carefully before entering any personal information."
   );
-}
+}  
     if (url.protocol !== "https:") {
       warnings++;
       riskScore += 25;
