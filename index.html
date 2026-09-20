@@ -182,7 +182,19 @@ if (hostnameParts.length >= 4) {
     "🔎 Check the main website name carefully before continuing."
   );
 }
-    const lookAlikePattern = /(paypa1|micros0ft|faceb00k|g00gle|amaz0n)/i;
+    const lookAlikeWords = [
+  "paypa1",
+  "micros0ft",
+  "faceb00k",
+  "g00gle",
+  "amaz0n"
+];
+
+const hasLookAlike = lookAlikeWords.some(word =>
+  url.hostname.toLowerCase().includes(word)
+);
+
+if (hasLookAlike) {
 
 if (lookAlikePattern.test(url.hostname)) {
   warnings++;
