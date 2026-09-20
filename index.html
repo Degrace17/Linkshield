@@ -284,18 +284,6 @@ if (hasUnusualPort) {
         "🔎 Check the website name carefully before continuing."
       );
     }
-if (hasEncodedCharacters) {
-  warnings++;
-  riskScore += 10;
-
-  reasons.push(
-    "⚠️ This link contains encoded characters that can make parts of the URL harder to read."
-  );
-
-  actions.push(
-    "🔎 Check the full website address carefully before continuing."
-  );
-}
     
     if (isVeryLong) {
       warnings++;
