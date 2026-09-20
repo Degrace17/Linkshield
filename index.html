@@ -240,27 +240,25 @@ if (isVeryLong) {
       }
 
       if (riskScore >= 50) {
-  result.innerHTML =
-    "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-    "🔴 <strong>High Risk</strong><br>" +
-    "Risk score: " + riskScore + "/100<br><br>" +
-    "<strong>Why we're concerned:</strong><br>" +
-    reasons.join("<br>") +
-    "<br><br>" +
-    "<strong>What you should do:</strong><br>" +
+  "🔴 <strong>High Risk</strong><br>" +
+"Risk score: " + riskScore + "/100<br><br>" +
+"<strong>What this means:</strong><br>" +
+"This link has several warning signs that deserve your attention. " +
+"LinkShield recommends avoiding sensitive information on this website until you can verify that it is genuine." +
+"<br><br>" +
+"<strong>Why we're concerned:</strong><br>" +
     actions.join("<br>");
 
   result.style.color = "red";
 
 } else if (riskScore >= 20) {
-  result.innerHTML =
-    "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-    "🟠 <strong>Be Careful</strong><br>" +
-    "Risk score: " + riskScore + "/100<br><br>" +
-    "<strong>Why we're concerned:</strong><br>" +
-    reasons.join("<br>") +
-    "<br><br>" +
-    "<strong>What you should do:</strong><br>" +
+  "🟠 <strong>Be Careful</strong><br>" +
+"Risk score: " + riskScore + "/100<br><br>" +
+"<strong>What this means:</strong><br>" +
+"LinkShield found something unusual about this link. " +
+"This does not automatically mean the website is dangerous, but you should check it carefully before sharing sensitive information." +
+"<br><br>" +
+"<strong>Why we're concerned:</strong><br>" +
     actions.join("<br>");
 
   result.style.color = "orange";
@@ -268,11 +266,13 @@ if (isVeryLong) {
 } else {
   result.innerHTML =
     "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-    "🟢 <strong>No obvious warning signs detected</strong><br>" +
-    "Risk score: " + riskScore + "/100<br><br>" +
-    "LinkShield did not find the warning signs it currently checks for.<br><br>" +
-    "🛡️ Always make sure you recognize the website before entering sensitive information.";
-
+    
+"🟢 <strong>No obvious warning signs detected</strong><br>" +
+"Risk score: " + riskScore + "/100<br><br>" +
+"<strong>What this means:</strong><br>" +
+"LinkShield did not find the warning signs it currently checks for. " +
+"This does not guarantee that the website is safe, so always make sure you recognize the website before entering sensitive information." +
+"<br><br>" +
   result.style.color = "green";
       }
 
