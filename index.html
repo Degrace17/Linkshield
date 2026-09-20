@@ -211,18 +211,7 @@ const hasLookAlike = lookAlikeWords.some(word =>
 );
 
 if (hasLookAlike) {
-  if (isShortenedLink) {
-  warnings++;
-  riskScore += 10;
-
-  reasons.push(
-    "⚠️ This link uses a URL-shortening service, which hides the final destination."
-  );
-
-  actions.push(
-    "🔎 Check the final destination carefully before continuing."
-  );
-  }
+  
   warnings++;
   riskScore += 20;
 
@@ -234,6 +223,18 @@ if (hasLookAlike) {
     "🔎 Check the spelling of the website carefully before entering any personal information."
   );
 }  
+    if (isShortenedLink) {
+  warnings++;
+  riskScore += 10;
+
+  reasons.push(
+    "⚠️ This link uses a URL-shortening service, which hides the final destination."
+  );
+
+  actions.push(
+    "🔎 Check the final destination carefully before continuing."
+  );
+    }
     if (url.protocol !== "https:") {
       warnings++;
       riskScore += 25;
