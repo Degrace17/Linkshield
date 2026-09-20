@@ -172,7 +172,6 @@ const hasUnusualPort =
     let reasons = [];
     let actions = [];
 const hostnameParts = url.hostname.split(".");
-const hasUnusualPort = url.port !== "";
 if (hostnameParts.length >= 4) {
   warnings++;
   riskScore += 15;
