@@ -186,6 +186,18 @@ const hostnameParts = url.hostname.split(".");
 const isShortenedLink = shortenerDomains.includes(
   url.hostname.toLowerCase()
 );
+    const suspiciousFileExtensions = [
+  ".exe",
+  ".scr",
+  ".bat",
+  ".cmd",
+  ".msi"
+];
+
+const hasSuspiciousFileExtension =
+  suspiciousFileExtensions.some(extension =>
+    url.pathname.toLowerCase().endsWith(extension)
+  );
 if (hostnameParts.length > 4 && !isIpAddress) {
   warnings++;
   riskScore += 15;
@@ -233,6 +245,18 @@ if (hasLookAlike) {
 
   actions.push(
     "🔎 Check the final destination carefully before continuing."
+  );
+    }
+    if (hasSuspiciousFileExtension) {
+  warnings++;
+  riskScore += 20;
+
+  reasons.push(
+    "⚠️ This link points to a potentially risky downloadable file."
+  );
+
+  actions.push(
+    "🛑 Do not download or open the file unless you completely trust the source."
   );
     }
     if (url.protocol !== "https:") {
