@@ -168,7 +168,20 @@ function checkLink() {
     let riskScore = 0;
     let reasons = [];
     let actions = [];
+const hostnameParts = url.hostname.split(".");
 
+if (hostnameParts.length >= 4) {
+  warnings++;
+  riskScore += 15;
+
+  reasons.push(
+    "⚠️ This link uses many subdomains, which can sometimes be used to disguise a suspicious website."
+  );
+
+  actions.push(
+    "🔎 Check the main website name carefully before continuing."
+  );
+}
     if (url.protocol !== "https:") {
       warnings++;
       riskScore += 25;
