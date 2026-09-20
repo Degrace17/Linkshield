@@ -172,7 +172,7 @@ const hasUnusualPort =
     let reasons = [];
     let actions = [];
 const hostnameParts = url.hostname.split(".");
-
+const hasUnusualPort = url.port !== "";
 if (hostnameParts.length >= 4) {
   warnings++;
   riskScore += 15;
@@ -234,7 +234,18 @@ if (hasLookAlike) {
         "🌐 Make sure you recognize the website before opening or entering personal information."
       );
     }
+if (hasUnusualPort) {
+  warnings++;
+  riskScore += 15;
 
+  reasons.push(
+    "⚠️ This link uses a non-standard port."
+  );
+
+  actions.push(
+    "🔎 Be careful when visiting links that use unusual ports."
+  );
+}
     if (hasAtSymbol) {
       warnings++;
       riskScore += 20;
