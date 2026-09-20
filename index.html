@@ -181,6 +181,7 @@ if (url.protocol !== "https:") {
   actions.push("🔐 Avoid entering passwords or payment information.");
 }
       
+
 if (isIpAddress) {
   warnings++;
   riskScore += 25;
@@ -192,8 +193,7 @@ if (isIpAddress) {
   actions.push(
     "🌐 Make sure you recognize the website before opening or entering personal information."
   );
-}
-
+  }
   actions.push(
     "🌐 Make sure you recognize the website before opening or entering personal information."
   );
