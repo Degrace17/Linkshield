@@ -172,6 +172,20 @@ const hasUnusualPort =
     let reasons = [];
     let actions = [];
 const hostnameParts = url.hostname.split(".");
+    const shortenerDomains = [
+  "bit.ly",
+  "tinyurl.com",
+  "t.co",
+  "goo.gl",
+  "ow.ly",
+  "is.gd",
+  "buff.ly",
+  "cutt.ly"
+];
+
+const isShortenedLink = shortenerDomains.includes(
+  url.hostname.toLowerCase()
+);
 if (hostnameParts.length >= 4) {
   warnings++;
   riskScore += 15;
@@ -197,6 +211,18 @@ const hasLookAlike = lookAlikeWords.some(word =>
 );
 
 if (hasLookAlike) {
+  if (isShortenedLink) {
+  warnings++;
+  riskScore += 10;
+
+  reasons.push(
+    "⚠️ This link uses a URL-shortening service, which hides the final destination."
+  );
+
+  actions.push(
+    "🔎 Check the final destination carefully before continuing."
+  );
+  }
   warnings++;
   riskScore += 20;
 
