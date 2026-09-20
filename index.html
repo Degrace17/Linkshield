@@ -129,169 +129,166 @@ button:active {
   </div>
     </div>
 <script>
-  function checkLink() {
-    const link = document.getElementById("linkInput").value.trim();
-    const result = document.getElementById("result");
+function checkLink() {
+  const link = document.getElementById("linkInput").value.trim();
+  const result = document.getElementById("result");
 
-    if (link === "") {
-      result.innerHTML = "⚠️ Please enter a link first.";
-      result.style.color = "orange";
-      return;
-    }
+  if (link === "") {
+    result.innerHTML = "⚠️ Please enter a link first.";
+    result.style.color = "orange";
+    return;
+  }
 
-    try {
-      const url = new URL(link);
+  try {
+    const url = new URL(link);
 
-      const suspiciousWords = [
-        "login",
-        "verify",
-        "password",
-        "account",
-        "bank",
-        "secure",
-        "update",
-        "confirm"
-      ];
+    const suspiciousWords = [
+      "login",
+      "verify",
+      "password",
+      "account",
+      "bank",
+      "secure",
+      "update",
+      "confirm"
+    ];
 
-      const foundWords = suspiciousWords.filter(word =>
-        url.href.toLowerCase().includes(word)
+    const foundWords = suspiciousWords.filter(word =>
+      url.href.toLowerCase().includes(word)
+    );
+
+    const ipAddressPattern =
+      /^https?:\/\/(\d{1,3}\.){3}\d{1,3}/;
+
+    const isIpAddress = ipAddressPattern.test(url.href);
+    const hasAtSymbol = url.href.includes("@");
+    const isVeryLong = url.href.length > 150;
+
+    let warnings = 0;
+    let riskScore = 0;
+    let reasons = [];
+    let actions = [];
+
+    if (url.protocol !== "https:") {
+      warnings++;
+      riskScore += 25;
+
+      reasons.push(
+        "⚠️ This link does not use HTTPS. Your connection may not be securely encrypted."
       );
 
-      const ipAddressPattern =
-        /^https?:\/\/(\d{1,3}\.){3}\d{1,3}/;
-
-      const isIpAddress = ipAddressPattern.test(url.href);
-      const hasAtSymbol = url.href.includes("@");
-      const isVeryLong = url.href.length > 150;
-
-      let warnings = 0;
-let riskScore = 0;
-let reasons = [];
-let actions = [];
-
-      
-if (url.protocol !== "https:") {
-  warnings++;
-  riskScore += 25;
-
-  reasons.push(
-    "⚠️ This link does not use HTTPS. Your connection may not be securely encrypted."
-  );
-
-  actions.push("🔐 Avoid entering passwords or payment information.");
-}
-      
-
-if (isIpAddress) {
-  warnings++;
-  riskScore += 25;
-
-  reasons.push(
-    "⚠️ This link uses a numeric IP address instead of a normal website name."
-  );
-
-  actions.push(
-    "🌐 Make sure you recognize the website before opening or entering personal information."
-  );
-  }
-  actions.push(
-    "🌐 Make sure you recognize the website before opening or entering personal information."
-  );
-}
-      if (hasAtSymbol) {
-  warnings++;
-  riskScore += 20;
-
-  reasons.push(
-    "⚠️ This link contains an @ symbol, which can sometimes be used to disguise the real website address."
-  );
-
-  actions.push(
-    "🔎 Check the website name carefully before continuing."
-  );
-      }
-
-      
-if (isVeryLong) {
-  warnings++;
-  riskScore += 10;
-
-  reasons.push(
-    "⚠️ This link is unusually long and may contain extra information that makes it harder to understand where the link leads."
-  );
-
-  actions.push(
-    "🔎 Avoid clicking if you were not expecting this link."
-  );
-}
-      if (foundWords.length > 0) {
-  warnings++;
-  riskScore += 15;
-
-  reasons.push(
-    "⚠️ This link contains words commonly used in urgent account or login requests: " +
-    foundWords.join(", ") +
-    "."
-  );
-
-  actions.push(
-    "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
-  );
-      }
-
-     if (riskScore >= 50) {
-  result.innerHTML =
-    "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-    "🔴 <strong>High Risk</strong><br>" +
-    "Risk score: " + riskScore + "/100<br><br>" +
-    "<strong>What this means:</strong><br>" +
-    "This link has several warning signs that deserve your attention. " +
-    "LinkShield recommends avoiding sensitive information on this website until you can verify that it is genuine." +
-    "<br><br>" +
-    "<strong>Why we're concerned:</strong><br>" +
-    reasons.join("<br>") +
-    "<br><br>" +
-    "<strong>What you should do:</strong><br>" +
-    actions.join("<br>");
-
-  result.style.color = "red";
-
-} else if (riskScore >= 20) {
-  result.innerHTML =
-    "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-    "🟠 <strong>Be Careful</strong><br>" +
-    "Risk score: " + riskScore + "/100<br><br>" +
-    "<strong>What this means:</strong><br>" +
-    "LinkShield found something unusual about this link. " +
-    "This does not automatically mean the website is dangerous, but you should check it carefully before sharing sensitive information." +
-    "<br><br>" +
-    "<strong>Why we're concerned:</strong><br>" +
-    reasons.join("<br>") +
-    "<br><br>" +
-    "<strong>What you should do:</strong><br>" +
-    actions.join("<br>");
-
-  result.style.color = "orange";
-
-} else {
-  result.innerHTML =
-    "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-    "🟢 <strong>No obvious warning signs detected</strong><br>" +
-    "Risk score: " + riskScore + "/100<br><br>" +
-    "<strong>What this means:</strong><br>" +
-    "LinkShield did not find the warning signs it currently checks for. " +
-    "This does not guarantee that the website is safe, so always make sure you recognize the website before entering sensitive information.";
-
-  result.style.color = "green";
-     } 
-
-    } catch (error) {
-      result.innerHTML =
-        "❌ This does not appear to be a valid link.";
-      result.style.color = "red";
+      actions.push(
+        "🔐 Avoid entering passwords or payment information."
+      );
     }
+
+    if (isIpAddress) {
+      warnings++;
+      riskScore += 25;
+
+      reasons.push(
+        "⚠️ This link uses a numeric IP address instead of a normal website name."
+      );
+
+      actions.push(
+        "🌐 Make sure you recognize the website before opening or entering personal information."
+      );
+    }
+
+    if (hasAtSymbol) {
+      warnings++;
+      riskScore += 20;
+
+      reasons.push(
+        "⚠️ This link contains an @ symbol, which can sometimes be used to disguise the real website address."
+      );
+
+      actions.push(
+        "🔎 Check the website name carefully before continuing."
+      );
+    }
+
+    if (isVeryLong) {
+      warnings++;
+      riskScore += 10;
+
+      reasons.push(
+        "⚠️ This link is unusually long and may contain extra information that makes it harder to understand where the link leads."
+      );
+
+      actions.push(
+        "🔎 Avoid clicking if you were not expecting this link."
+      );
+    }
+
+    if (foundWords.length > 0) {
+      warnings++;
+      riskScore += 15;
+
+      reasons.push(
+        "⚠️ This link contains words commonly used in urgent account or login requests: " +
+        foundWords.join(", ") +
+        "."
+      );
+
+      actions.push(
+        "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
+      );
+    }
+
+    if (riskScore >= 50) {
+      result.innerHTML =
+        "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
+        "🔴 <strong>High Risk</strong><br>" +
+        "Risk score: " + riskScore + "/100<br><br>" +
+        "<strong>What this means:</strong><br>" +
+        "This link has several warning signs that deserve your attention. " +
+        "LinkShield recommends avoiding sensitive information on this website until you can verify that it is genuine." +
+        "<br><br>" +
+        "<strong>Why we're concerned:</strong><br>" +
+        reasons.join("<br>") +
+        "<br><br>" +
+        "<strong>What you should do:</strong><br>" +
+        actions.join("<br>");
+
+      result.style.color = "red";
+
+    } else if (riskScore >= 20) {
+      result.innerHTML =
+        "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
+        "🟠 <strong>Be Careful</strong><br>" +
+        "Risk score: " + riskScore + "/100<br><br>" +
+        "<strong>What this means:</strong><br>" +
+        "LinkShield found something unusual about this link. " +
+        "This does not automatically mean the website is dangerous, but you should check it carefully before sharing sensitive information." +
+        "<br><br>" +
+        "<strong>Why we're concerned:</strong><br>" +
+        reasons.join("<br>") +
+        "<br><br>" +
+        "<strong>What you should do:</strong><br>" +
+        actions.join("<br>");
+
+      result.style.color = "orange";
+
+    } else {
+      result.innerHTML =
+        "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
+        "🟢 <strong>No obvious warning signs detected</strong><br>" +
+        "Risk score: " + riskScore + "/100<br><br>" +
+        "<strong>What this means:</strong><br>" +
+        "LinkShield did not find the warning signs it currently checks for. " +
+        "This does not guarantee that the website is safe, so always make sure you recognize the website before entering sensitive information.";
+
+      result.style.color = "green";
+    }
+
+  } catch (error) {
+    result.innerHTML =
+      "❌ This does not appear to be a valid link.";
+    result.style.color = "red";
   }
-</script>
+}
+        </script>
 </body>
 </html>
   
