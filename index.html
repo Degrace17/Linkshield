@@ -270,18 +270,6 @@ if (hasEncodedCharacters) {
     "🔎 Check the full website address carefully before continuing."
   );
 }
-    if (hasUnusualPort) {
-  warnings++;
-  riskScore += 10;
-
-  reasons.push(
-    "⚠️ This link uses a non-standard port, which is less common for ordinary public websites."
-  );
-
-  actions.push(
-    "🔎 Make sure you recognize the website before continuing."
-  );
-    }
     if (hasEncodedCharacters) {
   warnings++;
   riskScore += 10;
