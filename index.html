@@ -127,9 +127,94 @@ button:active {
   <div id="result">
   Your security report will appear here.
   </div>
-    </div>
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LinkShield</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eaf3ff;
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    h1 {
+      color: #0b4f9c;
+      font-size: 36px;
+      margin-bottom: 5px;
+    }
+
+    .tagline {
+      color: #4f78a8;
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 90%;
+      max-width: 500px;
+      padding: 14px;
+      border: 2px solid #0b4f9c;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 13px 25px;
+      background: #0b4f9c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #083b75;
+    }
+
+    #result {
+      margin: 25px auto;
+      padding: 20px;
+      max-width: 600px;
+      background: white;
+      border-radius: 10px;
+      text-align: left;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🛡️ LinkShield</h1>
+
+  <p class="tagline">
+    Check a link before you click.
+  </p>
+
+  <input
+    type="text"
+    id="linkInput"
+    placeholder="Paste a link here..."
+  >
+
+  <br>
+
+  <button onclick="checkLink()">Check Link</button>
+
+  <div id="result"></div>
+
+
 <script>
+
 function checkLink() {
+
   const link = document.getElementById("linkInput").value.trim();
   const result = document.getElementById("result");
 
@@ -140,189 +225,111 @@ function checkLink() {
   }
 
   try {
+
     const url = new URL(link);
 
-    const suspiciousWords = [
-      "login",
-      "verify",
-      "password",
-      "account",
-      "bank",
-      "secure",
-      "update",
-      "confirm"
-    ];
-
-    const foundWords = suspiciousWords.filter(word =>
-      url.href.toLowerCase().includes(word)
-    );
-
-    const ipAddressPattern =
-      /^https?:\/\/(\d{1,3}\.){3}\d{1,3}/;
-
-    const isIpAddress = ipAddressPattern.test(url.href);
-    const hasAtSymbol = url.href.includes("@");
-    const hasEncodedCharacters = /%[0-9A-Fa-f]{2}/.test(url.href);
-    const isVeryLong = url.href.length > 150;
-const hasUnusualPort =
-  url.port !== "" &&
-  !["80", "443"].includes(url.port);
     let warnings = 0;
     let riskScore = 0;
+
     let reasons = [];
     let actions = [];
-const hostnameParts = url.hostname.split(".");
-    const shortenerDomains = [
-  "bit.ly",
-  "tinyurl.com",
-  "t.co",
-  "goo.gl",
-  "ow.ly",
-  "is.gd",
-  "buff.ly",
-  "cutt.ly"
-];
 
-const isShortenedLink = shortenerDomains.includes(
-  url.hostname.toLowerCase()
-);
-    const suspiciousFileExtensions = [
-  ".exe",
-  ".scr",
-  ".bat",
-  ".cmd",
-  ".msi"
-];
 
-const hasSuspiciousFileExtension =
-  suspiciousFileExtensions.some(extension =>
-    url.pathname.toLowerCase().endsWith(extension)
-  );
-if (hostnameParts.length > 4 && !isIpAddress) {
-  warnings++;
-  riskScore += 15;
-
-  reasons.push(
-    "⚠️ This link uses many subdomains, which can sometimes be used to disguise a suspicious website."
-  );
-
-  actions.push(
-    "🔎 Check the main website name carefully before continuing."
-  );
-}
-  const lookAlikeWords = [
-  "paypa1",
-  "micros0ft",
-  "faceb00k",
-  "g00gle",
-  "amaz0n"
-];
-
-const hasLookAlike = lookAlikeWords.some(word =>
-  url.hostname.toLowerCase().includes(word)
-);
-
-if (hasLookAlike) {
-  
-  warnings++;
-  riskScore += 20;
-
-  reasons.push(
-    "⚠️ This domain may be using characters that imitate a familiar website name."
-  );
-
-  actions.push(
-    "🔎 Check the spelling of the website carefully before entering any personal information."
-  );
-}  
-    if (isShortenedLink) {
-  warnings++;
-  riskScore += 10;
-
-  reasons.push(
-    "⚠️ This link uses a URL-shortening service, which hides the final destination."
-  );
-
-  actions.push(
-    "🔎 Check the final destination carefully before continuing."
-  );
-    }
-    if (hasSuspiciousFileExtension) {
-  warnings++;
-  riskScore += 20;
-
-  reasons.push(
-    "⚠️ This link points to a potentially risky downloadable file."
-  );
-
-  actions.push(
-    "🛑 Do not download or open the file unless you completely trust the source."
-  );
-    }
+    // 1. HTTPS CHECK
     if (url.protocol !== "https:") {
-      warnings++;
-      riskScore += 25;
 
-      reasons.push(
-        "⚠️ This link does not use HTTPS. Your connection may not be securely encrypted."
-      );
-
-      actions.push(
-        "🔐 Avoid entering passwords or payment information."
-      );
-    }
-
-    if (isIpAddress) {
-      warnings++;
-      riskScore += 25;
-
-      reasons.push(
-        "⚠️ This link uses a numeric IP address instead of a normal website name."
-      );
-
-      actions.push(
-        "🌐 Make sure you recognize the website before opening or entering personal information."
-      );
-    }
-if (hasUnusualPort) {
-  warnings++;
-  riskScore += 15;
-
-  reasons.push(
-    "⚠️ This link uses a non-standard port."
-  );
-
-  actions.push(
-    "🔎 Be careful when visiting links that use unusual ports."
-  );
-}
-    if (hasAtSymbol) {
       warnings++;
       riskScore += 20;
 
       reasons.push(
-        "⚠️ This link contains an @ symbol, which can sometimes be used to disguise the real website address."
+        "⚠️ This link does not use HTTPS."
       );
 
       actions.push(
-        "🔎 Check the website name carefully before continuing."
+        "🔐 Avoid entering passwords or sensitive information on this website."
       );
     }
-    
-    if (isVeryLong) {
+
+
+    // 2. IP ADDRESS CHECK
+    const hostname = url.hostname;
+
+    const isIPAddress =
+      /^(\d{1,3}\.){3}\d{1,3}$/.test(hostname);
+
+    if (isIPAddress) {
+
+      warnings++;
+      riskScore += 15;
+
+      reasons.push(
+        "⚠️ This link uses an IP address instead of a normal website domain."
+      );
+
+      actions.push(
+        "🔎 Make sure you know and trust the website before continuing."
+      );
+    }
+
+
+    // 3. @ SYMBOL CHECK
+    if (link.includes("@")) {
+
+      warnings++;
+      riskScore += 20;
+
+      reasons.push(
+        "⚠️ This link contains an @ symbol, which can sometimes be used to hide the real destination."
+      );
+
+      actions.push(
+        "🚨 Do not enter personal or banking information unless you have confirmed the real website."
+      );
+    }
+
+
+    // 4. VERY LONG URL CHECK
+    if (link.length > 150) {
+
       warnings++;
       riskScore += 10;
 
       reasons.push(
-        "⚠️ This link is unusually long and may contain extra information that makes it harder to understand where the link leads."
+        "⚠️ This link is unusually long."
       );
 
       actions.push(
-        "🔎 Avoid clicking if you were not expecting this link."
+        "🔎 Be careful with very long links, especially when you do not recognize the sender."
       );
     }
 
+
+    // 5. SUSPICIOUS WORDS CHECK
+    const suspiciousWords = [
+      "login",
+      "verify",
+      "verification",
+      "secure",
+      "account",
+      "password",
+      "update",
+      "confirm",
+      "urgent",
+      "unlock",
+      "signin",
+      "bank",
+      "wallet",
+      "payment"
+    ];
+
+    const lowerLink = link.toLowerCase();
+
+    const foundWords = suspiciousWords.filter(word =>
+      lowerLink.includes(word)
+    );
+
     if (foundWords.length > 0) {
+
       warnings++;
       riskScore += 15;
 
@@ -336,79 +343,258 @@ if (hasUnusualPort) {
         "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
       );
     }
-actions.push(
-        "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
+
+
+    // 6. MANY SUBDOMAINS CHECK
+    const hostnameParts = url.hostname.split(".");
+
+    if (hostnameParts.length > 4) {
+
+      warnings++;
+      riskScore += 10;
+
+      reasons.push(
+        "⚠️ This link contains many subdomains, which can sometimes be used to make a website address look confusing."
+      );
+
+      actions.push(
+        "🔎 Carefully check the main domain name before continuing."
       );
     }
 
-    if (isShortenedLink) {
+
+    // 7. LOOK-ALIKE DOMAIN CHECK
+    const lookAlikePatterns = [
+      "paypa1",
+      "paypai",
+      "facebo0k",
+      "faceb00k",
+      "g00gle",
+      "go0gle",
+      "micros0ft",
+      "app1e",
+      "amaz0n"
+    ];
+
+    const foundLookAlikes = lookAlikePatterns.filter(word =>
+      hostname.toLowerCase().includes(word)
+    );
+
+    if (foundLookAlikes.length > 0) {
+
+      warnings++;
+      riskScore += 25;
+
+      reasons.push(
+        "🚨 This domain appears to contain characters that imitate a familiar website name."
+      );
+
+      actions.push(
+        "🛑 Do not enter passwords, payment information, OTPs, or other sensitive information until the domain is verified."
+      );
+    }
+
+
+    // 8. ENCODED CHARACTERS CHECK
+    if (/%[0-9A-Fa-f]{2}/.test(link)) {
+
+      warnings++;
+      riskScore += 10;
+
+      reasons.push(
+        "⚠️ This link contains encoded characters that can make the destination harder to read."
+      );
+
+      actions.push(
+        "🔎 Be extra careful if you do not recognize the sender or website."
+      );
+    }
+
+
+    // 9. UNUSUAL PORT CHECK
+    const hasUnusualPort = url.port !== "";
+
+    if (hasUnusualPort) {
+
       warnings++;
       riskScore += 15;
 
       reasons.push(
-        "⚠️ This link uses a URL-shortening service, which can hide the website it eventually leads to."
+        "⚠️ This link uses a specific network port instead of the standard web connection."
       );
 
       actions.push(
-        "🔎 Check the final destination carefully before entering passwords, payment details, or other sensitive information."
+        "🔎 Only continue if you recognize and trust the website."
       );
     }
 
-    if (riskScore >= 50) {
-    if (riskScore >= 50) {
-      result.innerHTML =
-        "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-        "🔴 <strong>High Risk</strong><br>" +
-        "Risk score: " + riskScore + "/100<br><br>" +
-        "<strong>What this means:</strong><br>" +
-        "This link has several warning signs that deserve your attention. " +
-        "LinkShield recommends avoiding sensitive information on this website until you can verify that it is genuine." +
-        "<br><br>" +
-        "<strong>Why we're concerned:</strong><br>" +
-        reasons.join("<br>") +
-        "<br><br>" +
-        "<strong>What you should do:</strong><br>" +
-        actions.join("<br>");
 
-      result.style.color = "red";
+    // 10. URL SHORTENER CHECK
+    const shortenerDomains = [
+      "bit.ly",
+      "tinyurl.com",
+      "t.co",
+      "goo.gl",
+      "is.gd",
+      "ow.ly",
+      "buff.ly",
+      "cutt.ly"
+    ];
 
-    } else if (riskScore >= 10 ) {
-      result.innerHTML =
-        "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-        "🟠 <strong>Be Careful</strong><br>" +
-        "Risk score: " + riskScore + "/100<br><br>" +
-        "<strong>What this means:</strong><br>" +
-        "LinkShield found something unusual about this link. " +
-        "This does not automatically mean the website is dangerous, but you should check it carefully before sharing sensitive information." +
-        "<br><br>" +
-        "<strong>Why we're concerned:</strong><br>" +
-        reasons.join("<br>") +
-        "<br><br>" +
-        "<strong>What you should do:</strong><br>" +
-        actions.join("<br>");
+    if (shortenerDomains.includes(hostname.toLowerCase())) {
 
-      result.style.color = "orange";
+      warnings++;
+      riskScore += 15;
 
-    } else {
-      result.innerHTML =
-        "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
-        "🟢 <strong>No obvious warning signs detected</strong><br>" +
-        "Risk score: " + riskScore + "/100<br><br>" +
-        "<strong>What this means:</strong><br>" +
-        "LinkShield did not find the warning signs it currently checks for. " +
-        "This does not guarantee that the website is safe, so always make sure you recognize the website before entering sensitive information.";
+      reasons.push(
+        "⚠️ This link uses a URL-shortening service, which hides the final destination."
+      );
 
-      result.style.color = "green";
+      actions.push(
+        "🔎 Avoid opening shortened links from unknown or unexpected sources."
+      );
     }
 
+
+    // 11. SUSPICIOUS DOWNLOAD EXTENSIONS
+    const suspiciousExtensions = [
+      ".exe",
+      ".scr",
+      ".bat",
+      ".cmd",
+      ".msi"
+    ];
+
+    const lowerPath = url.pathname.toLowerCase();
+
+    const foundExtension = suspiciousExtensions.find(extension =>
+      lowerPath.endsWith(extension)
+    );
+
+    if (foundExtension) {
+
+      warnings++;
+      riskScore += 25;
+
+      reasons.push(
+        "🚨 This link appears to point to a potentially dangerous downloadable file: " +
+        foundExtension
+      );
+
+      actions.push(
+        "🛑 Do not download or run this file unless you completely trust its source."
+      );
+    }
+
+
+    // LIMIT SCORE TO 100
+    if (riskScore > 100) {
+      riskScore = 100;
+    }
+
+
+    // FINAL REPORT
+    let status;
+    let statusColor;
+
+    if (riskScore >= 60) {
+
+      status = "🔴 High Risk";
+      statusColor = "red";
+
+    } else if (riskScore >= 30) {
+
+      status = "🟠 Be Careful";
+      statusColor = "orange";
+
+    } else if (riskScore > 0) {
+
+      status = "🟡 Caution";
+      statusColor = "#d6a400";
+
+    } else {
+
+      status = "🟢 No obvious warning signs detected";
+      statusColor = "green";
+    }
+
+
+    let report = `
+      <h2 style="color:${statusColor};">
+        LINKSHIELD SECURITY REPORT
+      </h2>
+
+      <h3 style="color:${statusColor};">
+        ${status}
+      </h3>
+
+      <p>
+        <strong>Risk score:</strong>
+        ${riskScore}/100
+      </p>
+    `;
+
+
+    if (warnings > 0) {
+
+      report += `
+        <p>
+          <strong>Risk indicators detected:</strong>
+          ${warnings}
+        </p>
+
+        <h3>Why this link was flagged:</h3>
+
+        <p>
+          ${reasons.join("<br><br>")}
+        </p>
+
+        <h3>What you should do:</h3>
+
+        <p>
+          ${actions.join("<br><br>")}
+        </p>
+      `;
+
+    } else {
+
+      report += `
+        <p>
+          <strong>What this means:</strong>
+        </p>
+
+        <p>
+          LinkShield did not find the warning signs it currently checks for.
+          This does not guarantee that the website is safe, so always make sure
+          you recognize the website before entering sensitive information.
+        </p>
+      `;
+    }
+
+
+    result.innerHTML = report;
+    result.style.color = "#222";
+
   } catch (error) {
-    result.innerHTML =
-      "❌ This does not appear to be a valid link.";
-    result.style.color = "red";
+
+    result.innerHTML = `
+      <h2 style="color:red;">
+        ❌ Invalid Link
+      </h2>
+
+      <p>
+        Please enter a valid website link, such as:
+      </p>
+
+      <p>
+        <strong>https://example.com</strong>
+      </p>
+    `;
+
+    result.style.color = "#222";
   }
 }
-        </script>
+
+</script>
 </body>
 </html>
-  
-  
