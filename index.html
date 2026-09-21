@@ -336,7 +336,25 @@ if (hasUnusualPort) {
         "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
       );
     }
+actions.push(
+        "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
+      );
+    }
 
+    if (isShortenedLink) {
+      warnings++;
+      riskScore += 15;
+
+      reasons.push(
+        "⚠️ This link uses a URL-shortening service, which can hide the website it eventually leads to."
+      );
+
+      actions.push(
+        "🔎 Check the final destination carefully before entering passwords, payment details, or other sensitive information."
+      );
+    }
+
+    if (riskScore >= 50) {
     if (riskScore >= 50) {
       result.innerHTML =
         "<strong>🛡️ LINKSHIELD SECURITY REPORT</strong><br><br>" +
