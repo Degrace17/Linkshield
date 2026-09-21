@@ -6,70 +6,7 @@
 
   <title>LinkShield</title>
 
-  <style>
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background-color: #062b52;
-    text-align: center;
-    padding: 30px 15px;
-  }
-
-  h1 {
-    color: #0b4f9c;
-    font-size: 36px;
-    margin: 0 0 5px 0;
-  }
-
-  .tagline {
-    color: #4f78a8;
-    margin-bottom: 25px;
-  }
-    input {
-    width: 90%;
-    max-width: 500px;
-    padding: 14px;
-    border: 2px solid #00c853;
-    border-radius: 8px;
-    font-size: 16px;
-    background: #1a1a2e;
-    color: white;
-  }
-
   
-
-  button {
-  background: #00c853;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 200, 83, 0.3);
-}
-
-button:hover {
-  background: #00a844;
-}
-
-  #result {
-    margin: 25px auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 600px;
-    background: white;
-    border-radius: 10px;
-    text-align: left;
-    line-height: 1.6;
-  }
-  </style>
 </head>
 
 <body>
@@ -94,7 +31,71 @@ button:hover {
     Your security report will appear here.
   </div>
 
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #062b52;
+    text-align: center;
+    padding: 30px 15px;
+  }
+
+  h1 {
+    color: white;
+    font-size: 42px;
+    margin: 0 0 8px 0;
+    font-weight: bold;
+  }
+
+  .tagline {
+    color: #c9dff5;
+    margin-bottom: 25px;
+    font-size: 17px;
+  }
+
+  input {
+    width: 90%;
+    max-width: 500px;
+    padding: 14px;
+    border: 2px solid #0b4f9c;
+    border-radius: 8px;
+    font-size: 16px;
+    background: white;
+    color: black;
+  }
+
+  button {
+    background: #0b4f9c;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #083d78;
+  }
+
+  #result {
+    margin: 25px auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    border-radius: 10px;
+    text-align: left;
+    line-height: 1.6;
+  }
+</style>
 <script>
 
 function checkLink() {
