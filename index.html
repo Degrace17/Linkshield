@@ -6,391 +6,490 @@
 
   <title>LinkShield</title>
 
-  
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #061b3a;
+      color: white;
+      text-align: center;
+      padding: 35px 15px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 620px;
+      margin: auto;
+      background: #0b2148;
+      border: 1px solid #1c477d;
+      border-radius: 28px;
+      padding: 35px 25px 45px;
+      box-shadow: 0 0 35px rgba(0, 100, 255, 0.15);
+    }
+
+    .shield {
+      font-size: 75px;
+      margin-bottom: 5px;
+      filter: drop-shadow(0 0 12px rgba(100, 200, 255, 0.35));
+    }
+
+    h1 {
+      color: white;
+      font-size: 46px;
+      margin: 0 0 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .tagline {
+      color: #a9c4e8;
+      font-size: 19px;
+      margin: 0 0 42px;
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 19px 20px;
+      border: 1px solid #28568d;
+      border-radius: 24px;
+      font-size: 18px;
+      background: #061a38;
+      color: white;
+      outline: none;
+      margin-bottom: 25px;
+    }
+
+    .input-box::placeholder {
+      color: #aab2c0;
+    }
+
+    .input-box:focus {
+      border-color: #247cff;
+      box-shadow: 0 0 15px rgba(36, 124, 255, 0.25);
+    }
+
+    button {
+      width: 100%;
+      max-width: 540px;
+      background: #1674e8;
+      color: white;
+      border: none;
+      padding: 19px;
+      border-radius: 24px;
+      font-size: 19px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 100, 255, 0.35);
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #0f64cf;
+      transform: translateY(-1px);
+    }
+
+    #result {
+      margin: 38px auto 0;
+      padding: 25px;
+      width: 100%;
+      background: #061a38;
+      border: 1px solid #28568d;
+      border-radius: 24px;
+      text-align: left;
+      line-height: 1.7;
+      color: white;
+      overflow-wrap: break-word;
+    }
+
+    #result h2 {
+      font-size: 21px;
+      margin-top: 0;
+    }
+
+    #result h3 {
+      margin-top: 28px;
+    }
+
+    #result p {
+      font-size: 17px;
+    }
+
+    @media (max-width: 480px) {
+
+      body {
+        padding: 20px 10px;
+      }
+
+      .container {
+        padding: 30px 18px 35px;
+        border-radius: 24px;
+      }
+
+      .shield {
+        font-size: 65px;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .tagline {
+        font-size: 17px;
+        margin-bottom: 35px;
+      }
+
+      .input-box {
+        font-size: 17px;
+        padding: 18px;
+      }
+
+      button {
+        font-size: 18px;
+      }
+
+      #result {
+        padding: 22px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>🛡️ LinkShield</h1>
+  <div class="container">
 
-  <p class="tagline">
-    Check a link before you click.
-  </p>
+    <div class="shield">🛡️</div>
 
-  <input
-    type="text"
-    id="linkInput"
-    placeholder="Paste a link here..."
-  >
+    <h1>LinkShield</h1>
 
-  <br>
+    <p class="tagline">
+      Protect yourself from dangerous links.
+    </p>
 
-  <button onclick="checkLink()">Check Link</button>
+    <input
+      class="input-box"
+      type="text"
+      id="linkInput"
+      placeholder="https://example.com"
+    >
 
-  <div id="result">
-    Your security report will appear here.
+    <button onclick="checkLink()">
+      Check Link
+    </button>
+
+    <div id="result">
+      Your security report will appear here.
+    </div>
+
   </div>
 
-<style>
-  * {
-    box-sizing: border-box;
-  }
 
-  body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background-color: #062b52;
-    text-align: center;
-    padding: 30px 15px;
-  }
+  <script>
 
-  h1 {
-    color: white;
-    font-size: 42px;
-    margin: 0 0 8px 0;
-    font-weight: bold;
-  }
+  function checkLink() {
 
-  .tagline {
-    color: #c9dff5;
-    margin-bottom: 25px;
-    font-size: 17px;
-  }
+    const link = document.getElementById("linkInput").value.trim();
+    const result = document.getElementById("result");
 
-  input {
-    width: 90%;
-    max-width: 500px;
-    padding: 14px;
-    border: 2px solid #0b4f9c;
-    border-radius: 8px;
-    font-size: 16px;
-    background: white;
-    color: black;
-  }
-
-  button {
-    background: #0b4f9c;
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    margin-top: 15px;
-    border-radius: 8px;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  button:hover {
-    background: #083d78;
-  }
-
-  #result {
-    margin: 25px auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 600px;
-    background: white;
-    border-radius: 10px;
-    text-align: left;
-    line-height: 1.6;
-  }
-</style>
-<script>
-
-function checkLink() {
-
-  const link = document.getElementById("linkInput").value.trim();
-  const result = document.getElementById("result");
-
-  if (link === "") {
-    result.innerHTML = "⚠️ Please enter a link first.";
-    result.style.color = "orange";
-    return;
-  }
-
-  try {
-
-    const url = new URL(link);
-
-    let riskScore = 0;
-    let warnings = [];
-    let actions = [];
-
-
-    // HTTPS
-    if (url.protocol !== "https:") {
-
-      riskScore += 20;
-
-      warnings.push(
-        "⚠️ This link does not use HTTPS."
-      );
-
-      actions.push(
-        "🔐 Avoid entering sensitive information."
-      );
+    if (link === "") {
+      result.innerHTML = "⚠️ Please enter a link first.";
+      result.style.color = "orange";
+      return;
     }
 
+    try {
 
-    // IP address
-    const isIPAddress =
-      /^(\d{1,3}\.){3}\d{1,3}$/.test(url.hostname);
+      const url = new URL(link);
 
-    if (isIPAddress) {
+      let riskScore = 0;
+      let warnings = [];
+      let actions = [];
 
-      riskScore += 15;
 
-      warnings.push(
-        "⚠️ This link uses an IP address instead of a normal domain."
+      // HTTPS
+      if (url.protocol !== "https:") {
+
+        riskScore += 20;
+
+        warnings.push(
+          "⚠️ This link does not use HTTPS."
+        );
+
+        actions.push(
+          "🔐 Avoid entering sensitive information."
+        );
+      }
+
+
+      // IP address
+      const isIPAddress =
+        /^(\d{1,3}\.){3}\d{1,3}$/.test(url.hostname);
+
+      if (isIPAddress) {
+
+        riskScore += 15;
+
+        warnings.push(
+          "⚠️ This link uses an IP address instead of a normal domain."
+        );
+
+        actions.push(
+          "🔎 Make sure you trust the website."
+        );
+      }
+
+
+      // @ symbol
+      if (link.includes("@")) {
+
+        riskScore += 20;
+
+        warnings.push(
+          "⚠️ This link contains an @ symbol."
+        );
+
+        actions.push(
+          "🚨 Check the real destination carefully."
+        );
+      }
+
+
+      // Long URL
+      if (link.length > 150) {
+
+        riskScore += 10;
+
+        warnings.push(
+          "⚠️ This link is unusually long."
+        );
+
+        actions.push(
+          "🔎 Be careful with very long links."
+        );
+      }
+
+
+      // Suspicious words
+      const suspiciousWords = [
+        "login",
+        "verify",
+        "verification",
+        "password",
+        "urgent",
+        "unlock",
+        "signin",
+        "bank",
+        "payment"
+      ];
+
+      const lowerLink = link.toLowerCase();
+
+      const foundWords = suspiciousWords.filter(word =>
+        lowerLink.includes(word)
       );
 
-      actions.push(
-        "🔎 Make sure you trust the website."
-      );
-    }
+      if (foundWords.length > 0) {
+
+        riskScore += 15;
+
+        warnings.push(
+          "⚠️ This link contains suspicious words: " +
+          foundWords.join(", ") +
+          "."
+        );
+
+        actions.push(
+          "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
+        );
+      }
 
 
-    // @ symbol
-    if (link.includes("@")) {
+      // Many subdomains
+      const hostnameParts = url.hostname.split(".");
 
-      riskScore += 20;
+      if (hostnameParts.length > 4) {
 
-      warnings.push(
-        "⚠️ This link contains an @ symbol."
-      );
+        riskScore += 10;
 
-      actions.push(
-        "🚨 Check the real destination carefully."
-      );
-    }
+        warnings.push(
+          "⚠️ This link contains many subdomains."
+        );
 
-
-    // Long URL
-    if (link.length > 150) {
-
-      riskScore += 10;
-
-      warnings.push(
-        "⚠️ This link is unusually long."
-      );
-
-      actions.push(
-        "🔎 Be careful with very long links."
-      );
-    }
+        actions.push(
+          "🔎 Carefully check the main domain name."
+        );
+      }
 
 
-    // Suspicious words
-    const suspiciousWords = [
-      "login",
-      "verify",
-      "verification",
-      "password",
-      "urgent",
-      "unlock",
-      "signin",
-      "bank",
-      "payment"
-    ];
+      // Encoded characters
+      if (/%[0-9A-Fa-f]{2}/.test(link)) {
 
-    const lowerLink = link.toLowerCase();
+        riskScore += 10;
 
-    const foundWords = suspiciousWords.filter(word =>
-      lowerLink.includes(word)
-    );
+        warnings.push(
+          "⚠️ This link contains encoded characters."
+        );
 
-    if (foundWords.length > 0) {
-
-      riskScore += 15;
-
-      warnings.push(
-        "⚠️ This link contains suspicious words: " +
-        foundWords.join(", ") +
-        "."
-      );
-
-      actions.push(
-        "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
-      );
-    }
+        actions.push(
+          "🔎 Be careful if you do not recognize the sender."
+        );
+      }
 
 
-    // Many subdomains
-    const hostnameParts = url.hostname.split(".");
+      // Unusual port
+      if (url.port !== "") {
 
-    if (hostnameParts.length > 4) {
+        riskScore += 15;
 
-      riskScore += 10;
+        warnings.push(
+          "⚠️ This link uses a specific network port."
+        );
 
-      warnings.push(
-        "⚠️ This link contains many subdomains."
+        actions.push(
+          "🔎 Only continue if you recognize and trust the website."
+        );
+      }
+
+
+      // Suspicious file
+      const suspiciousExtensions = [
+        ".exe",
+        ".scr",
+        ".bat",
+        ".cmd",
+        ".msi"
+      ];
+
+      const lowerPath = url.pathname.toLowerCase();
+
+      const foundExtension = suspiciousExtensions.find(extension =>
+        lowerPath.endsWith(extension)
       );
 
-      actions.push(
-        "🔎 Carefully check the main domain name."
-      );
-    }
+      if (foundExtension) {
+
+        riskScore += 25;
+
+        warnings.push(
+          "🚨 This link appears to point to a potentially dangerous file: " +
+          foundExtension
+        );
+
+        actions.push(
+          "🛑 Do not download or run this file unless you completely trust its source."
+        );
+      }
 
 
-    // Encoded characters
-    if (/%[0-9A-Fa-f]{2}/.test(link)) {
-
-      riskScore += 10;
-
-      warnings.push(
-        "⚠️ This link contains encoded characters."
-      );
-
-      actions.push(
-        "🔎 Be careful if you do not recognize the sender."
-      );
-    }
+      // Maximum score
+      if (riskScore > 100) {
+        riskScore = 100;
+      }
 
 
-    // Unusual port
-    if (url.port !== "") {
+      // Result
+      let status;
+      let color;
 
-      riskScore += 15;
+      if (riskScore >= 60) {
 
-      warnings.push(
-        "⚠️ This link uses a specific network port."
-      );
+        status = "🔴 High Risk";
+        color = "red";
 
-      actions.push(
-        "🔎 Only continue if you recognize and trust the website."
-      );
-    }
+      } else if (riskScore >= 30) {
 
+        status = "🟠 Be Careful";
+        color = "orange";
 
-    // Suspicious file
-    const suspiciousExtensions = [
-      ".exe",
-      ".scr",
-      ".bat",
-      ".cmd",
-      ".msi"
-    ];
+      } else if (riskScore > 0) {
 
-    const lowerPath = url.pathname.toLowerCase();
+        status = "🟡 Caution";
+        color = "#d6a400";
 
-    const foundExtension = suspiciousExtensions.find(extension =>
-      lowerPath.endsWith(extension)
-    );
+      } else {
 
-    if (foundExtension) {
-
-      riskScore += 25;
-
-      warnings.push(
-        "🚨 This link appears to point to a potentially dangerous file: " +
-        foundExtension
-      );
-
-      actions.push(
-        "🛑 Do not download or run this file unless you completely trust its source."
-      );
-    }
+        status = "🟢 No obvious warning signs detected";
+        color = "green";
+      }
 
 
-    // Maximum score
-    if (riskScore > 100) {
-      riskScore = 100;
-    }
+      let report = `
+        <h2 style="color:${color};">
+          🛡️ LINKSHIELD SECURITY REPORT
+        </h2>
 
-
-    // Result
-    let status;
-    let color;
-
-    if (riskScore >= 60) {
-
-      status = "🔴 High Risk";
-      color = "red";
-
-    } else if (riskScore >= 30) {
-
-      status = "🟠 Be Careful";
-      color = "orange";
-
-    } else if (riskScore > 0) {
-
-      status = "🟡 Caution";
-      color = "#d6a400";
-
-    } else {
-
-      status = "🟢 No obvious warning signs detected";
-      color = "green";
-    }
-
-
-    let report = `
-      <h2 style="color:${color};">
-        LINKSHIELD SECURITY REPORT
-      </h2>
-
-      <h3 style="color:${color};">
-        ${status}
-      </h3>
-
-      <p>
-        <strong>Risk score:</strong> ${riskScore}/100
-      </p>
-    `;
-
-
-    if (warnings.length > 0) {
-
-      report += `
-        <h3>Why this link was flagged:</h3>
+        <h3 style="color:${color};">
+          ${status}
+        </h3>
 
         <p>
-          ${warnings.join("<br><br>")}
-        </p>
-
-        <h3>What you should do:</h3>
-
-        <p>
-          ${actions.join("<br><br>")}
+          <strong>Risk score:</strong> ${riskScore}/100
         </p>
       `;
 
-    } else {
 
-      report += `
+      if (warnings.length > 0) {
+
+        report += `
+          <h3>Why this link was flagged:</h3>
+
+          <p>
+            ${warnings.join("<br><br>")}
+          </p>
+
+          <h3>What you should do:</h3>
+
+          <p>
+            ${actions.join("<br><br>")}
+          </p>
+        `;
+
+      } else {
+
+        report += `
+          <h3>What this means:</h3>
+
+          <p>
+            LinkShield did not find the warning signs it currently checks for.
+          </p>
+
+          <p>
+            This does not guarantee that the website is safe.
+          </p>
+        `;
+      }
+
+
+      result.innerHTML = report;
+
+      result.style.color = "white";
+
+
+    } catch (error) {
+
+      result.innerHTML = `
+        <h2 style="color:red;">
+          ❌ Invalid Link
+        </h2>
+
         <p>
-          LinkShield did not find the warning signs it currently checks for.
+          Please enter a valid link, for example:
         </p>
 
-        <p>
-          This does not guarantee that the website is safe.
-        </p>
+        <strong>https://example.com</strong>
       `;
+
+      result.style.color = "white";
     }
 
-
-    result.innerHTML = report;
-
-
-  } catch (error) {
-
-    result.innerHTML = `
-      <h2 style="color:red;">
-        ❌ Invalid Link
-      </h2>
-
-      <p>
-        Please enter a valid link, for example:
-      </p>
-
-      <strong>https://example.com</strong>
-    `;
   }
 
-}
-
-</script>
+  </script>
 
 </body>
 </html>
