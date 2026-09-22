@@ -96,7 +96,25 @@
   if (riskScore >= 50) {
   result.innerHTML = `
     <div class="security-report high-risk">
-      <div class="report-title">🛡️ LINKSHIELD SECURITY REPORT</div>
+      .report-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+.report-shield {
+  font-size: 42px;
+  flex-shrink: 0;
+}
+
+.report-title strong {
+  color: #168cff;
+}
 
       <div class="status">🔴 High Risk</div>
 
@@ -182,10 +200,23 @@
 }
 
 .report-title {
-  text-align: center;
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 15px;
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+.report-shield {
+  font-size: 42px;
+  flex-shrink: 0;
+}
+
+.report-title strong {
+  color: #168cff;
 }
 
 .status {
@@ -482,57 +513,146 @@
         color = "green";
       }
 
+let report = `
+        <div style="
+          background:#0d2145;
+          border:1px solid #24518c;
+          border-radius:16px;
+          padding:20px;
+          margin-top:20px;
+          text-align:left;
+          box-shadow:0 8px 20px rgba(0,0,0,0.25);
+        ">
 
-      let report = `
-        <h2 style="color:${color};">
-          🛡️ LINKSHIELD SECURITY REPORT
-        </h2>
+          <h2 style="
+            color:white;
+            text-align:center;
+            margin-top:0;
+          ">
+            🛡️ LINKSHIELD
+          </h2>
 
-        <h3 style="color:${color};">
-          ${status}
-        </h3>
+          <p style="
+            text-align:center;
+            color:#9fc5f8;
+            margin-top:-8px;
+          ">
+            SECURITY REPORT
+          </p>
 
-        <p>
-          <strong>Risk score:</strong> ${riskScore}/100
-        </p>
+          <div style="
+            text-align:center;
+            font-size:22px;
+            font-weight:bold;
+            color:${color};
+            margin:20px 0 10px;
+          ">
+            ${status}
+          </div>
+
+          <p style="
+            text-align:center;
+            color:white;
+            font-size:18px;
+          ">
+            <strong>Risk score:</strong> ${riskScore}/100
+          </p>
+
+          <div style="
+            width:100%;
+            height:12px;
+            background:#07152f;
+            border-radius:20px;
+            overflow:hidden;
+            margin:15px 0 25px;
+          ">
+            <div style="
+              width:${riskScore}%;
+              height:100%;
+              background:${color};
+              border-radius:20px;
+            "></div>
+          </div>
       `;
 
 
       if (warnings.length > 0) {
 
         report += `
-          <h3>Why this link was flagged:</h3>
+          <div style="
+            background:#07152f;
+            border-radius:12px;
+            padding:15px;
+            margin-bottom:15px;
+          ">
 
-          <p>
-            ${warnings.join("<br><br>")}
-          </p>
+            <h3 style="color:#ffb347; margin-top:0;">
+              ⚠️ Why this link was flagged
+            </h3>
 
-          <h3>What you should do:</h3>
+            <p style="color:white; line-height:1.6;">
+              ${warnings.join("<br><br>")}
+            </p>
 
-          <p>
-            ${actions.join("<br><br>")}
-          </p>
+          </div>
+
+
+          <div style="
+            background:#07152f;
+            border-radius:12px;
+            padding:15px;
+          ">
+
+            <h3 style="color:#70d6ff; margin-top:0;">
+              🔐 What you should do
+            </h3>
+
+            <p style="color:white; line-height:1.6;">
+              ${actions.join("<br><br>")}
+            </p>
+
+          </div>
         `;
 
       } else {
 
         report += `
-          <h3>What this means:</h3>
+          <div style="
+            background:#07152f;
+            border-radius:12px;
+            padding:15px;
+          ">
 
-          <p>
-            LinkShield did not find the warning signs it currently checks for.
-          </p>
+            <h3 style="color:#5ee38a; margin-top:0;">
+              🟢 What this means
+            </h3>
 
-          <p>
-            This does not guarantee that the website is safe.
-          </p>
+            <p style="color:white; line-height:1.6;">
+              LinkShield did not find the warning signs it currently checks for.
+            </p>
+
+            <p style="
+              color:#9fc5f8;
+              line-height:1.6;
+              margin-bottom:0;
+            ">
+              This does not guarantee that the website is safe. Always make sure
+              you recognize and trust the website before entering sensitive information.
+            </p>
+
+          </div>
         `;
       }
 
 
-      result.innerHTML = report;
+      report += `
+        </div>
+      `;
 
+
+      result.innerHTML = report;
       result.style.color = "white";
+      
 
 
     } catch (error) {
