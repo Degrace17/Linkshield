@@ -93,69 +93,134 @@
       transform: translateY(-1px);
     }
 
-    #result {
-      margin: 38px auto 0;
-      padding: 25px;
-      width: 100%;
-      background: #061a38;
-      border: 1px solid #28568d;
-      border-radius: 24px;
-      text-align: left;
-      line-height: 1.7;
-      color: white;
-      overflow-wrap: break-word;
-    }
+  if (riskScore >= 50) {
+  result.innerHTML = `
+    <div class="security-report high-risk">
+      <div class="report-title">🛡️ LINKSHIELD SECURITY REPORT</div>
 
-    #result h2 {
-      font-size: 21px;
-      margin-top: 0;
-    }
+      <div class="status">🔴 High Risk</div>
 
-    #result h3 {
-      margin-top: 28px;
-    }
+      <div class="risk-score">
+        Risk score: <strong>${riskScore}/100</strong>
+      </div>
 
-    #result p {
-      font-size: 17px;
-    }
+      <h3>What this means</h3>
+      <p>
+        LinkShield detected several warning signs that may indicate
+        this link is unsafe or suspicious.
+      </p>
 
-    @media (max-width: 480px) {
+      <h3>Why we're concerned</h3>
+      <ul>
+        ${reasons.map(reason => `<li>${reason}</li>`).join("")}
+      </ul>
 
-      body {
-        padding: 20px 10px;
-      }
+      <h3>What you should do</h3>
+      <ul>
+        ${actions.map(action => `<li>${action}</li>`).join("")}
+      </ul>
+    </div>
+  `;
 
-      .container {
-        padding: 30px 18px 35px;
-        border-radius: 24px;
-      }
+} else if (riskScore >= 10) {
+  result.innerHTML = `
+    <div class="security-report caution">
+      <div class="report-title">🛡️ LINKSHIELD SECURITY REPORT</div>
 
-      .shield {
-        font-size: 65px;
-      }
+      <div class="status">🟠 Be Careful</div>
 
-      h1 {
-        font-size: 40px;
-      }
+      <div class="risk-score">
+        Risk score: <strong>${riskScore}/100</strong>
+      </div>
 
-      .tagline {
-        font-size: 17px;
-        margin-bottom: 35px;
-      }
+      <h3>What this means</h3>
+      <p>
+        LinkShield found some unusual warning signs in this link.
+      </p>
 
-      .input-box {
-        font-size: 17px;
-        padding: 18px;
-      }
+      <h3>Why we're concerned</h3>
+      <ul>
+        ${reasons.map(reason => `<li>${reason}</li>`).join("")}
+      </ul>
 
-      button {
-        font-size: 18px;
-      }
+      <h3>What you should do</h3>
+      <ul>
+        ${actions.map(action => `<li>${action}</li>`).join("")}
+      </ul>
+    </div>
+  `;
 
-      #result {
-        padding: 22px;
-      }
-    }
+} else {
+  result.innerHTML = `
+    <div class="security-report safe">
+      <div class="report-title">🛡️ LINKSHIELD SECURITY REPORT</div>
+
+      <div class="status">🟢 No obvious warning signs detected</div>
+
+      <div class="risk-score">
+        Risk score: <strong>0/100</strong>
+      </div>
+
+      <h3>What this means</h3>
+      <p>
+        LinkShield did not find the warning signs it currently checks for.
+      </p>
+
+      <p>
+        This does not guarantee that the website is safe, so always make
+        sure you recognize the website before entering sensitive information.
+      </p>
+    </div>
+  `;
+  }
+  .security-report {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: left;
+  border: 1px solid #24518c;
+}
+
+.report-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.status {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.risk-score {
+  text-align: center;
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.security-report h3 {
+  margin-bottom: 6px;
+}
+
+.security-report p,
+.security-report li {
+  line-height: 1.6;
+}
+
+.safe {
+  border-color: #22c55e;
+}
+
+.caution {
+  border-color: #f59e0b;
+}
+
+.high-risk {
+  border-color: #ef4444;
+}
   </style>
 </head>
 
