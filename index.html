@@ -417,484 +417,375 @@ button:active {
 
 
   <script>
+function checkLink() {
 
-  function checkLink() {
+  const linkInput = document.getElementById("linkInput");
+  const result = document.getElementById("result");
 
-    let link = document.getElementById("linkInput").value.trim();
-const result = document.getElementById("result");
+  let link = linkInput.value.trim();
 
-    if (link === "") {
-      result.innerHTML = "⚠️ Please enter a link first.";
-      result.style.color = "orange";
-      return;
-    }
+  if (link === "") {
+    result.innerHTML = "⚠️ Please enter a link first.";
+    result.style.color = "orange";
+    return;
+  }
 
-    try {
-
+  // Automatically add https:// if the user enters example.com
   if (!/^https?:\/\//i.test(link)) {
     link = "https://" + link;
   }
 
-  const url = new URL(link);
+  try {
+
+    const url = new URL(link);
+
+    let riskScore = 0;
+    let warnings = [];
+
+    // HTTPS check
+    if (url.protocol !== "https:") {
+      riskScore += 25;
+      warnings.push("The link does not use HTTPS.");
+    }
+
+    // IP address check
+    const isIpAddress = /^\d{1,3}(\.\d{1,3}){3}$/.test(url.hostname);
+
+    if (isIpAddress) {
+      riskScore += 25;
+      warnings.push("The link uses a numeric IP address instead of a normal domain name.");
+    }
+
+    // @ symbol check
+    if (link.includes("@")) {
+      riskScore += 20;
+      warnings.push("The link contains an @ symbol, which can sometimes disguise the real destination.");
+    }
+
+    // Suspicious words
+    const suspiciousWords = [
+      "login",
+      "verify",
+      "password",
+      "account",
+      "bank",
+      "secure",
+      "update",
+      "confirm"
+    ];
+
+    const lowerLink = link.toLowerCase();
+
+    if (suspiciousWords.some(word => lowerLink.includes(word))) {
+      riskScore += 15;
+      warnings.push("The link contains words commonly used in urgent account or login requests.");
+    }
+
+    // Very long URL
+    if (url.href.length > 150) {
+      riskScore += 10;
+      warnings.push("The URL is unusually long.");
+    }
+
+    // Many subdomains
+    const hostnameParts = url.hostname.split(".");
+
+    if (hostnameParts.length > 4 && !isIpAddress) {
+      riskScore += 15;
+      warnings.push("The website uses many subdomains, which can sometimes disguise a suspicious destination.");
+    }
+
+    // Look-alike domain names
+    const lookAlikeNames = [
+      "paypa1",
+      "micros0ft",
+      "faceb00k",
+      "g00gle",
+      "amaz0n"
+    ];
+
+    if (lookAlikeNames.some(name => url.hostname.toLowerCase().includes(name))) {
+      riskScore += 20;
+      warnings.push("The domain contains characters that resemble a well-known website name.");
+    }
+
+    // Encoded characters
+    if (/%[0-9A-Fa-f]{2}/.test(link)) {
+      riskScore += 10;
+      warnings.push("The URL contains encoded characters that may hide part of the destination.");
+    }
+
+    // Unusual port
+    if (
+      url.port !== "" &&
+      !["80", "443"].includes(url.port)
+    ) {
+      riskScore += 15;
+      warnings.push("The link uses a non-standard port.");
+    }
+
+    // URL shorteners
+    const shorteners = [
+      "bit.ly",
+      "tinyurl.com",
+      "t.co",
+      "goo.gl",
+      "is.gd",
+      "buff.ly"
+    ];
+
+    if (shorteners.includes(url.hostname.toLowerCase())) {
+      riskScore += 10;
+      warnings.push("The link uses a URL-shortening service, which hides the final destination.");
+    }
+
+    // Suspicious downloadable files
+    const suspiciousExtensions = [
+      ".exe",
+      ".scr",
+      ".bat",
+      ".cmd",
+      ".msi"
+    ];
+
+    if (
+      suspiciousExtensions.some(extension =>
+        url.pathname.toLowerCase().endsWith(extension)
+      )
+    ) {
+      riskScore += 20;
+      warnings.push("The link points to a potentially risky downloadable file.");
+    }
+
+    // Limit score to 100
+    riskScore = Math.min(riskScore, 100);
+
+    let riskTitle;
+    let riskColor;
+    let riskExplanation;
+    let riskAction;
+
+    if (riskScore >= 50) {
+
+      riskTitle = "🔴 High Risk";
+      riskColor = "#ef4444";
+      riskExplanation = "This link shows multiple warning signs and should be treated with caution.";
+      riskAction = "Avoid entering passwords, banking details, OTPs, or other sensitive information until the website has been independently verified.";
+
+    } else if (riskScore >= 10) {
+
+      riskTitle = "🟠 Be Careful";
+      riskColor = "#f59e0b";
+      riskExplanation = "This link shows one or more warning signs that deserve your attention.";
+      riskAction = "Be cautious and verify the website before entering sensitive information or downloading anything.";
+
+    } else {
+
+      riskTitle = "🟢 Low Risk";
+      riskColor = "#22c55e";
+      riskExplanation = "No obvious warning signs were detected by LinkShield's current checks.";
+      riskAction = "Continue to use normal security precautions.";
+
+    }
+
+    const report = `
+      <div style="
+        background:#0d2145;
+        border:1px solid #24518c;
+        border-radius:16px;
+        padding:20px;
+        text-align:left;
+        box-shadow:0 8px 20px rgba(0,0,0,0.25);
+      ">
+
+        <h2 style="
+          color:white;
+          text-align:center;
+          margin-top:0;
+        ">
+          🛡️ LINKSHIELD
+        </h2>
+
+        <p style="
+          text-align:center;
+          color:#9fc5f8;
+          margin-top:-8px;
+        ">
+          SECURITY REPORT
+        </p>
 
-      let riskScore = 0;
-      let warnings = [];
-      let actions = [];
-
-
-      // HTTPS
-      if (url.protocol !== "https:") {
-
-        riskScore += 20;
-
-        warnings.push(
-          "⚠️ This link does not use HTTPS."
-        );
-
-        actions.push(
-          "🔐 Avoid entering sensitive information."
-        );
-      }
-
-
-      // IP address
-      const isIPAddress =
-        /^(\d{1,3}\.){3}\d{1,3}$/.test(url.hostname);
-
-      if (isIPAddress) {
-
-        riskScore += 15;
-
-        warnings.push(
-          "⚠️ This link uses an IP address instead of a normal domain."
-        );
-
-        actions.push(
-          "🔎 Make sure you trust the website."
-        );
-      }
-
-
-      // @ symbol
-      if (link.includes("@")) {
-
-        riskScore += 20;
-
-        warnings.push(
-          "⚠️ This link contains an @ symbol."
-        );
-
-        actions.push(
-          "🚨 Check the real destination carefully."
-        );
-      }
-
-
-      // Long URL
-      if (link.length > 150) {
-
-        riskScore += 10;
-
-        warnings.push(
-          "⚠️ This link is unusually long."
-        );
-
-        actions.push(
-          "🔎 Be careful with very long links."
-        );
-      }
-
-
-      // Suspicious words
-      const suspiciousWords = [
-        "login",
-        "verify",
-        "verification",
-        "password",
-        "urgent",
-        "unlock",
-        "signin",
-        "bank",
-        "payment"
-      ];
-
-      const lowerLink = link.toLowerCase();
-
-      const foundWords = suspiciousWords.filter(word =>
-        lowerLink.includes(word)
-      );
-
-      if (foundWords.length > 0) {
-
-        riskScore += 15;
-
-        warnings.push(
-          "⚠️ This link contains suspicious words: " +
-          foundWords.join(", ") +
-          "."
-        );
-
-        actions.push(
-          "🔐 Do not enter your password, PIN, OTP, or banking details unless you are certain the website is genuine."
-        );
-      }
-
-
-      // Many subdomains
-      const hostnameParts = url.hostname.split(".");
-
-      if (hostnameParts.length > 4) {
-
-        riskScore += 10;
-
-        warnings.push(
-          "⚠️ This link contains many subdomains."
-        );
-
-        actions.push(
-          "🔎 Carefully check the main domain name."
-        );
-      }
-
-
-      // Encoded characters
-      if (/%[0-9A-Fa-f]{2}/.test(link)) {
-
-        riskScore += 10;
-
-        warnings.push(
-          "⚠️ This link contains encoded characters."
-        );
-
-        actions.push(
-          "🔎 Be careful if you do not recognize the sender."
-        );
-      }
-
-
-      // Unusual port
-      if (url.port !== "") {
-
-        riskScore += 15;
-
-        warnings.push(
-          "⚠️ This link uses a specific network port."
-        );
-
-        actions.push(
-          "🔎 Only continue if you recognize and trust the website."
-        );
-      }
-
-
-      // Suspicious file
-      const suspiciousExtensions = [
-        ".exe",
-        ".scr",
-        ".bat",
-        ".cmd",
-        ".msi"
-      ];
-
-      const lowerPath = url.pathname.toLowerCase();
-
-      const foundExtension = suspiciousExtensions.find(extension =>
-        lowerPath.endsWith(extension)
-      );
-
-      if (foundExtension) {
-
-        riskScore += 25;
-
-        warnings.push(
-          "🚨 This link appears to point to a potentially dangerous file: " +
-          foundExtension
-        );
-
-        actions.push(
-          "🛑 Do not download or run this file unless you completely trust its source."
-        );
-      }
-
-
-      // Maximum score
-      if (riskScore > 100) {
-        riskScore = 100;
-      }
-
-
-      // Result
-      let status;
-      let color;
-
-      if (riskScore >= 60) {
-
-        status = "🔴 High Risk";
-        color = "red";
-
-      } else if (riskScore >= 30) {
-
-        status = "🟠 Be Careful";
-        color = "orange";
-
-      } else if (riskScore > 0) {
-
-        status = "🟡 Caution";
-        color = "#d6a400";
-
-      } else {
-
-        status = "🟢 No obvious warning signs detected";
-        color = "green";
-      }
-
-let report = `
         <div style="
-          background:#0d2145;
-          border:1px solid #24518c;
-          border-radius:16px;
-          padding:20px;
-          margin-top:20px;
-          text-align:left;
-          box-shadow:0 8px 20px rgba(0,0,0,0.25);
+          background:#07152f;
+          border-radius:14px;
+          padding:18px;
+          text-align:center;
+          margin-bottom:20px;
         ">
 
-          <h2 style="
-            color:white;
-            text-align:center;
-            margin-top:0;
-          ">
-            🛡️ LINKSHIELD
-          </h2>
-
-          <p style="
-            text-align:center;
-            color:#9fc5f8;
-            margin-top:-8px;
-          ">
-            SECURITY REPORT
-          </p>
-
           <div style="
-            text-align:center;
             font-size:22px;
             font-weight:bold;
-            color:${color};
-            margin:20px 0 10px;
+            margin-bottom:10px;
+            color:${riskColor};
           ">
-            ${status}
+            ${riskTitle}
           </div>
 
-          <p style="
-            text-align:center;
-            color:white;
-            font-size:18px;
+          <div style="
+            color:#dbeafe;
+            font-size:15px;
+            margin-bottom:12px;
           ">
-            <strong>Risk score:</strong> ${riskScore}/100
-          </p>
+            Risk score: <strong>${riskScore}/100</strong>
+          </div>
 
           <div style="
             width:100%;
-            height:12px;
-            background:#07152f;
-            border-radius:20px;
+            height:10px;
+            background:#1e3a5f;
+            border-radius:10px;
             overflow:hidden;
-            margin:15px 0 25px;
           ">
             <div style="
               width:${riskScore}%;
               height:100%;
-              background:${color};
-              border-radius:20px;
+              background:${riskColor};
+              border-radius:10px;
             "></div>
           </div>
-      `;
 
-report += `
-  <div class="security-report ${riskClass}" style="
-    margin-top:20px;
-    padding:20px;
-    border-radius:18px;
-    text-align:left;
-    background:#0b1d3a;
-    border:1px solid #24518c;
-    box-shadow:0 8px 20px rgba(0,0,0,0.25);
-  ">
-
-    <h2 style="
-      color:white;
-      text-align:center;
-      margin-top:0;
-      margin-bottom:4px;
-    ">
-      🛡️ LINKSHIELD
-    </h2>
-
-    <p style="
-      text-align:center;
-      color:#9fc5f8;
-      margin-top:0;
-      margin-bottom:22px;
-      font-size:13px;
-      letter-spacing:1px;
-      font-weight:bold;
-    ">
-      SECURITY REPORT
-    </p>
-
-    <div style="
-      background:#07152f;
-      border-radius:14px;
-      padding:18px;
-      text-align:center;
-      margin-bottom:20px;
-    ">
-
-      <div style="
-        font-size:22px;
-        font-weight:bold;
-        margin-bottom:10px;
-      ">
-        ${riskTitle}
-      </div>
-
-      <div style="
-        color:#dbeafe;
-        font-size:15px;
-        margin-bottom:12px;
-      ">
-        Risk score: <strong>${riskScore}/100</strong>
-      </div>
-
-      <div style="
-        width:100%;
-        height:10px;
-        background:#1e3a5f;
-        border-radius:10px;
-        overflow:hidden;
-      ">
-        <div style="
-          width:${Math.min(riskScore,100)}%;
-          height:100%;
-          background:${riskColor};
-          border-radius:10px;
-        "></div>
-      </div>
-
-    </div>
-
-    <h3 style="
-      color:#168cff;
-      margin-bottom:6px;
-    ">
-      What this means
-    </h3>
-
-    <p style="
-      color:#dbeafe;
-      line-height:1.6;
-      margin-top:0;
-    ">
-      ${riskExplanation}
-    </p>
-
-    ${
-      warnings.length > 0
-      ? `
-        <h3 style="
-          color:#168cff;
-          margin-bottom:8px;
-        ">
-          Why we're concerned
-        </h3>
-
-        <ul style="
-          color:#dbeafe;
-          line-height:1.7;
-          padding-left:22px;
-        ">
-          ${warnings.map(warning => `<li>${warning}</li>`).join("")}
-        </ul>
-
-        <h3 style="
-          color:#168cff;
-          margin-bottom:8px;
-        ">
-          What you should do
-        </h3>
-
-        <p style="
-          color:#dbeafe;
-          line-height:1.6;
-        ">
-          ${riskAction}
-        </p>
-      `
-      : `
-        <div style="
-          margin-top:18px;
-          padding:14px;
-          background:#082b20;
-          border:1px solid #22c55e;
-          border-radius:12px;
-          color:#bbf7d0;
-          line-height:1.5;
-        ">
-          🟢 No obvious warning signs were detected.
         </div>
 
-        <p style="
-          color:#9fc5f8;
-          line-height:1.6;
-          margin-top:16px;
+        <h3 style="
+          color:#168cff;
+          margin-bottom:6px;
         ">
-          This does not guarantee that the website is completely safe.
-          LinkShield checks for common warning signs, but some dangerous
-          websites may not show obvious indicators.
-        </p>
-      `
-    }
+          What this means
+        </h3>
 
-    <div style="
-      margin-top:20px;
-      padding:14px;
-      background:#07152f;
-      border-radius:12px;
-      border:1px solid #24518c;
-      color:#9fc5f8;
-      font-size:13px;
-      line-height:1.5;
-    ">
-      🛡️ <strong style="color:white;">LinkShield Safety Reminder</strong><br>
-      Never enter passwords, banking details, OTPs, or other sensitive
-      information on a website unless you trust and have verified it.
-    </div>
-
-  </div>
-`;
-
-result.innerHTML = report;
-result.style.color = "white";
-      
-
-    } catch (error) {
-
-      result.innerHTML = `
-        <h2 style="color:red;">
-          ❌ Invalid Link
-        </h2>
-
-        <p>
-          Please enter a valid link, for example:
+        <p style="
+          color:#dbeafe;
+          line-height:1.6;
+          margin-top:0;
+        ">
+          ${riskExplanation}
         </p>
 
-        <strong>https://example.com</strong>
-      `;
+        ${
+          warnings.length > 0
+          ? `
+            <h3 style="
+              color:#168cff;
+              margin-bottom:8px;
+            ">
+              Why we're concerned
+            </h3>
 
-      result.style.color = "white";
-    }
+            <ul style="
+              color:#dbeafe;
+              line-height:1.7;
+              padding-left:22px;
+            ">
+              ${warnings.map(warning => `<li>${warning}</li>`).join("")}
+            </ul>
 
+            <h3 style="
+              color:#168cff;
+              margin-bottom:8px;
+            ">
+              What you should do
+            </h3>
+
+            <p style="
+              color:#dbeafe;
+              line-height:1.6;
+            ">
+              ${riskAction}
+            </p>
+          `
+          : `
+            <div style="
+              margin-top:18px;
+              padding:14px;
+              background:#082b20;
+              border:1px solid #22c55e;
+              border-radius:12px;
+              color:#bbf7d0;
+              line-height:1.5;
+            ">
+              🟢 No obvious warning signs were detected.
+            </div>
+
+            <p style="
+              color:#9fc5f8;
+              line-height:1.6;
+              margin-top:16px;
+            ">
+              This does not guarantee that the website is completely safe.
+              LinkShield checks for common warning signs, but some dangerous
+              websites may not show obvious indicators.
+            </p>
+          `
+        }
+
+        <div style="
+          margin-top:20px;
+          padding:14px;
+          background:#07152f;
+          border-radius:12px;
+          border:1px solid #24518c;
+          color:#9fc5f8;
+          font-size:13px;
+          line-height:1.5;
+        ">
+          🛡️ <strong style="color:white;">LinkShield Safety Reminder</strong><br>
+          Never enter passwords, banking details, OTPs, or other sensitive
+          information on a website unless you trust and have verified it.
+        </div>
+
+      </div>
+    `;
+
+    result.innerHTML = report;
+    result.style.color = "white";
+
+  } catch (error) {
+
+    result.innerHTML = `
+      <h2 style="color:red;">
+        ❌ Invalid Link
+      </h2>
+
+      <p style="color:white;">
+        Please enter a valid website address, for example:
+      </p>
+
+      <strong style="color:white;">
+        https://example.com
+      </strong>
+    `;
+
+    result.style.color = "white";
   }
+
+}
+
+Now save the file.
+
+Then test these two links one at a time:
+
+Test 1:
+
+example.com
+
+Test 2:
+
+https://example.com
+
+The important change is that LinkShield now automatically turns "example.com" into "https://example.com", so it should no longer be rejected simply because you didn't type "https://".
+
+Don't change anything else yet. Tell me exactly what appears after you test "example.com".
+  
 
   </script>
 
