@@ -706,85 +706,172 @@ let report = `
           </div>
       `;
 
+report += `
+  <div class="security-report ${riskClass}" style="
+    margin-top:20px;
+    padding:20px;
+    border-radius:18px;
+    text-align:left;
+    background:#0b1d3a;
+    border:1px solid #24518c;
+    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  ">
 
-      if (warnings.length > 0) {
+    <h2 style="
+      color:white;
+      text-align:center;
+      margin-top:0;
+      margin-bottom:4px;
+    ">
+      🛡️ LINKSHIELD
+    </h2>
 
-        report += `
-          <div style="
-            background:#07152f;
-            border-radius:12px;
-            padding:15px;
-            margin-bottom:15px;
-          ">
+    <p style="
+      text-align:center;
+      color:#9fc5f8;
+      margin-top:0;
+      margin-bottom:22px;
+      font-size:13px;
+      letter-spacing:1px;
+      font-weight:bold;
+    ">
+      SECURITY REPORT
+    </p>
 
-            <h3 style="color:#ffb347; margin-top:0;">
-              ⚠️ Why this link was flagged
-            </h3>
+    <div style="
+      background:#07152f;
+      border-radius:14px;
+      padding:18px;
+      text-align:center;
+      margin-bottom:20px;
+    ">
 
-            <p style="color:white; line-height:1.6;">
-              ${warnings.join("<br><br>")}
-            </p>
+      <div style="
+        font-size:22px;
+        font-weight:bold;
+        margin-bottom:10px;
+      ">
+        ${riskTitle}
+      </div>
 
-          </div>
+      <div style="
+        color:#dbeafe;
+        font-size:15px;
+        margin-bottom:12px;
+      ">
+        Risk score: <strong>${riskScore}/100</strong>
+      </div>
 
+      <div style="
+        width:100%;
+        height:10px;
+        background:#1e3a5f;
+        border-radius:10px;
+        overflow:hidden;
+      ">
+        <div style="
+          width:${Math.min(riskScore,100)}%;
+          height:100%;
+          background:${riskColor};
+          border-radius:10px;
+        "></div>
+      </div>
 
-          <div style="
-            background:#07152f;
-            border-radius:12px;
-            padding:15px;
-          ">
+    </div>
 
-            <h3 style="color:#70d6ff; margin-top:0;">
-              🔐 What you should do
-            </h3>
+    <h3 style="
+      color:#168cff;
+      margin-bottom:6px;
+    ">
+      What this means
+    </h3>
 
-            <p style="color:white; line-height:1.6;">
-              ${actions.join("<br><br>")}
-            </p>
+    <p style="
+      color:#dbeafe;
+      line-height:1.6;
+      margin-top:0;
+    ">
+      ${riskExplanation}
+    </p>
 
-          </div>
-        `;
+    ${
+      warnings.length > 0
+      ? `
+        <h3 style="
+          color:#168cff;
+          margin-bottom:8px;
+        ">
+          Why we're concerned
+        </h3>
 
-      } else {
+        <ul style="
+          color:#dbeafe;
+          line-height:1.7;
+          padding-left:22px;
+        ">
+          ${warnings.map(warning => `<li>${warning}</li>`).join("")}
+        </ul>
 
-        report += `
-          <div style="
-            background:#07152f;
-            border-radius:12px;
-            padding:15px;
-          ">
+        <h3 style="
+          color:#168cff;
+          margin-bottom:8px;
+        ">
+          What you should do
+        </h3>
 
-            <h3 style="color:#5ee38a; margin-top:0;">
-              🟢 What this means
-            </h3>
-
-            <p style="color:white; line-height:1.6;">
-              LinkShield did not find the warning signs it currently checks for.
-            </p>
-
-            <p style="
-              color:#9fc5f8;
-              line-height:1.6;
-              margin-bottom:0;
-            ">
-              This does not guarantee that the website is safe. Always make sure
-              you recognize and trust the website before entering sensitive information.
-            </p>
-
-          </div>
-        `;
-      }
-
-
-      report += `
+        <p style="
+          color:#dbeafe;
+          line-height:1.6;
+        ">
+          ${riskAction}
+        </p>
+      `
+      : `
+        <div style="
+          margin-top:18px;
+          padding:14px;
+          background:#082b20;
+          border:1px solid #22c55e;
+          border-radius:12px;
+          color:#bbf7d0;
+          line-height:1.5;
+        ">
+          🟢 No obvious warning signs were detected.
         </div>
-      `;
 
+        <p style="
+          color:#9fc5f8;
+          line-height:1.6;
+          margin-top:16px;
+        ">
+          This does not guarantee that the website is completely safe.
+          LinkShield checks for common warning signs, but some dangerous
+          websites may not show obvious indicators.
+        </p>
+      `
+    }
 
-      result.innerHTML = report;
-      result.style.color = "white";
+    <div style="
+      margin-top:20px;
+      padding:14px;
+      background:#07152f;
+      border-radius:12px;
+      border:1px solid #24518c;
+      color:#9fc5f8;
+      font-size:13px;
+      line-height:1.5;
+    ">
+      🛡️ <strong style="color:white;">LinkShield Safety Reminder</strong><br>
+      Never enter passwords, banking details, OTPs, or other sensitive
+      information on a website unless you trust and have verified it.
+    </div>
+
+  </div>
+`;
+
+result.innerHTML = report;
+result.style.color = "white";
       
-
 
     } catch (error) {
 
