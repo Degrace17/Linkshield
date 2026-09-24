@@ -431,7 +431,11 @@ button:active {
 
     try {
 
-      const url = new URL(link);
+  if (!/^https?:\/\//i.test(link)) {
+    link = "https://" + link;
+  }
+
+  const url = new URL(link);
 
       let riskScore = 0;
       let warnings = [];
