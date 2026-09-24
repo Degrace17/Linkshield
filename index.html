@@ -420,8 +420,8 @@ button:active {
 
   function checkLink() {
 
-    const link = document.getElementById("linkInput").value.trim();
-    const result = document.getElementById("result");
+    let link = document.getElementById("linkInput").value.trim();
+const result = document.getElementById("result");
 
     if (link === "") {
       result.innerHTML = "⚠️ Please enter a link first.";
