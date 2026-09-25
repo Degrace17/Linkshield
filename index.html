@@ -522,7 +522,39 @@ if (url.hostname.toLowerCase().includes("xn--")) {
       if (riskScore > 100) {
         riskScore = 100;
       }
+/*
+        REDIRECT DETECTOR
+      */
 
+      const redirectParameters = [
+        "url",
+        "redirect",
+        "redirect_url",
+        "redirect_uri",
+        "return",
+        "return_url",
+        "next",
+        "target",
+        "dest",
+        "destination"
+      ];
+
+      const hasRedirectParameter = redirectParameters.some(parameter =>
+        url.searchParams.has(parameter)
+      );
+
+      if (hasRedirectParameter) {
+
+        riskScore += 15;
+
+        warnings.push(
+          "The link contains a parameter that may redirect you to another website."
+        );
+
+        actions.push(
+          "Check where the link will take you before entering passwords or other sensitive information."
+        );
+      }
 
       /*
         DETERMINE SECURITY STATUS
