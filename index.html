@@ -368,7 +368,33 @@
         "g00gle",
         "amaz0n"
       ];
+/*
+  SUSPICIOUS DOMAIN PATTERN
+*/
 
+const suspiciousDomainPatterns = [
+  "-secure-",
+  "-official-",
+  "-verification-",
+  "-support-",
+  "-account-"
+];
+
+const hasSuspiciousDomainPattern = suspiciousDomainPatterns.some(pattern =>
+  url.hostname.toLowerCase().includes(pattern)
+);
+
+if (hasSuspiciousDomainPattern) {
+  riskScore += 10;
+
+  warnings.push(
+    "The website domain uses a pattern that can sometimes be used to make a site appear more official or trustworthy."
+  );
+
+  actions.push(
+    "Check the domain carefully and make sure it is the official website before entering sensitive information."
+  );
+}
       const foundLookAlike = lookAlikeNames.some(name =>
         url.hostname.toLowerCase().includes(name)
       );
