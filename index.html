@@ -395,6 +395,22 @@ if (hasSuspiciousDomainPattern) {
     "Check the domain carefully and make sure it is the official website before entering sensitive information."
   );
 }
+      /*
+  PUNYCODE / INTERNATIONALIZED DOMAIN CHECK
+*/
+
+if (url.hostname.toLowerCase().includes("xn--")) {
+
+  riskScore += 15;
+
+  warnings.push(
+    "The website domain uses an encoded internationalized domain name that may be harder to recognize."
+  );
+
+  actions.push(
+    "Check the domain carefully and make sure it belongs to the website you intended to visit."
+  );
+}
       const foundLookAlike = lookAlikeNames.some(name =>
         url.hostname.toLowerCase().includes(name)
       );
