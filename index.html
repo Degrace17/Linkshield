@@ -414,42 +414,7 @@ if (hasSuspiciousDomainPattern) {
       }
 
 
-      /*
-        8. ENCODED CHARACTERS
-      */
-/*
-  PUNYCODE / ENCODED DOMAIN
-*/
-
-if (url.hostname.toLowerCase().includes("xn--")) {
-
-  riskScore += 10;
-
-  warnings.push(
-    "The website domain uses an encoded internationalized domain name that may be harder to recognize."
-  );
-
-  actions.push(
-    "Check the domain carefully and make sure it belongs to the website you intended to visit."
-  );
-}
-      if (/%[0-9A-Fa-f]{2}/.test(url.href)) {
-
-        riskScore += 10;
-
-        warnings.push(
-          "The URL contains encoded characters that make part of the address harder to read."
-        );
-
-        actions.push(
-          "Be cautious and verify the destination before continuing."
-        );
-      }
-
-
-      /*
-        9. UNUSUAL PORT
-      */
+      
 
       if (
         url.port !== "" &&
