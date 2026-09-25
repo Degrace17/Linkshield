@@ -534,21 +534,7 @@ if (url.hostname.toLowerCase().includes("xn--")) {
       }
 
 
- /*
-  12. PUNYCODE / DISGUISED DOMAIN
-*/
-
-if (url.hostname.toLowerCase().includes("xn--")) {
-  riskScore += 15;
-
-  warnings.push(
-    "The website uses a specially encoded domain name that may make the address harder to recognize."
-  );
-
-  actions.push(
-    "Check the domain carefully and make sure it belongs to the website you intended to visit."
-  );
-}     /*
+  /*
         LIMIT SCORE TO 100
       */
 
