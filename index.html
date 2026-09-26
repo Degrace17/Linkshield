@@ -805,6 +805,36 @@ if (hasLatin && hasNonLatin) {
   );
     }
       /*
+   DOMAIN NORMALIZATION DETECTOR
+*/
+
+const originalHostMatch = link.match(
+  /^(?:https?:\/\/)?([^\/?#:]+)/
+);
+
+const originalHost = originalHostMatch
+  ? originalHostMatch[1].toLowerCase()
+  : "";
+
+const normalizedHost = url.hostname.toLowerCase();
+
+if (
+  originalHost &&
+  normalizedHost &&
+  originalHost !== normalizedHost &&
+  !originalHost.startsWith("www.")
+) {
+  riskScore += 10;
+
+  warnings.push(
+    "The domain was normalized by the browser and may contain unusual characters or formatting."
+  );
+
+  actions.push(
+    "Check the domain carefully and make sure it matches the website you intended to visit."
+  );
+}
+      /*
         DETERMINE SECURITY STATUS
       */
 
