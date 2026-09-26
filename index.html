@@ -763,6 +763,21 @@ if (domainLength > 50) {
     "Check the domain carefully and make sure it belongs to the website you intended to visit."
   );
 } 
+    /*
+   BACKSLASH URL DETECTOR
+*/
+
+if (link.includes("\\")) {
+  riskScore += 10;
+
+  warnings.push(
+    "The link contains a backslash that may cause the URL to be interpreted unexpectedly."
+  );
+
+  actions.push(
+    "Avoid opening the link unless you recognize and trust the website address."
+  );
+}  
       /*
         DETERMINE SECURITY STATUS
       */
