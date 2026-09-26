@@ -628,6 +628,27 @@ if (hyphenCount >= 3 && !isIpAddress(hostname)) {
   );
 }
       /*
+   DOUBLE EXTENSION DETECTOR
+*/
+
+const path = url.pathname.toLowerCase();
+
+const doubleExtensionPattern =
+  /\.(pdf|doc|docx|xls|xlsx|jpg|jpeg|png|gif|txt)\.(exe|scr|bat|cmd|msi)$/i;
+
+if (doubleExtensionPattern.test(path)) {
+
+  riskScore += 10;
+
+  warnings.push(
+    "The link uses a double file extension that may disguise a potentially dangerous file."
+  );
+
+  actions.push(
+    "Do not download the file unless you are certain the file type and website are legitimate."
+  );
+}
+      /*
         DETERMINE SECURITY STATUS
       */
 
