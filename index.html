@@ -833,7 +833,24 @@ if (
   actions.push(
     "Check the domain carefully and make sure it matches the website you intended to visit."
   );
-}
+}/*
+   URL SCHEME DETECTOR
+*/
+
+const allowedSchemes = ["http:", "https:"];
+
+if (!allowedSchemes.includes(url.protocol.toLowerCase())) {
+  riskScore += 15;
+
+  warnings.push(
+    "The link uses a URL scheme that is not a standard web HTTP or HTTPS connection."
+  );
+
+  actions.push(
+    "Avoid opening the link unless you recognize and trust the application or service associated with it."
+  );
+    }
+      
       /*
         DETERMINE SECURITY STATUS
       */
