@@ -717,6 +717,36 @@ if (hasDuplicateParameter) {
   );
 }
       /*
+   SUSPICIOUS TLD DETECTOR
+*/
+
+const suspiciousTLDs = [
+  ".zip",
+  ".click",
+  ".top",
+  ".xyz",
+  ".work",
+  ".download"
+];
+
+const hostnameLower = url.hostname.toLowerCase();
+
+const hasSuspiciousTLD = suspiciousTLDs.some(tld =>
+  hostnameLower.endsWith(tld)
+);
+
+if (hasSuspiciousTLD) {
+  riskScore += 10;
+
+  warnings.push(
+    "The website uses a domain ending that can sometimes be associated with suspicious or abusive links."
+  );
+
+  actions.push(
+    "Check the website name carefully and make sure you trust the domain before entering sensitive information."
+  );
+}
+      /*
         DETERMINE SECURITY STATUS
       */
 
