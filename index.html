@@ -664,6 +664,58 @@ if (url.username || url.password) {
     "Check the actual domain after the @ symbol before opening the link."
   );
 } 
+     /*
+   SUSPICIOUS FRAGMENT DETECTOR
+*/
+
+const fragment = url.hash.toLowerCase();
+
+const suspiciousFragmentWords = [
+  "login",
+  "verify",
+  "account",
+  "password",
+  "secure",
+  "confirm"
+];
+
+const hasSuspiciousFragment = suspiciousFragmentWords.some(word =>
+  fragment.includes(word)
+);
+
+if (hasSuspiciousFragment) {
+
+  riskScore += 10;
+
+  warnings.push(
+    "The link contains suspicious words in its URL fragment."
+  );
+
+  actions.push(
+    "Check the link carefully before entering passwords or other sensitive information."
+  );
+} 
+      /*
+   DUPLICATE PARAMETER DETECTOR
+*/
+
+const parameterNames = [...url.searchParams.keys()];
+
+const hasDuplicateParameter = parameterNames.some(
+  (name, index) => parameterNames.indexOf(name) !== index
+);
+
+if (hasDuplicateParameter) {
+  riskScore += 10;
+
+  warnings.push(
+    "The link repeats one or more URL parameters."
+  );
+
+  actions.push(
+    "Be cautious if the same parameter appears multiple times, especially when the link asks for sensitive information."
+  );
+}
       /*
         DETERMINE SECURITY STATUS
       */
