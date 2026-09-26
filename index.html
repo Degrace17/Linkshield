@@ -648,6 +648,22 @@ if (doubleExtensionPattern.test(path)) {
     "Do not download the file unless you are certain the file type and website are legitimate."
   );
 }
+     /*
+   URL USER-INFO DETECTOR
+*/
+
+if (url.username || url.password) {
+
+  riskScore += 10;
+
+  warnings.push(
+    "The link contains information before the @ symbol that may hide the real website address."
+  );
+
+  actions.push(
+    "Check the actual domain after the @ symbol before opening the link."
+  );
+} 
       /*
         DETERMINE SECURITY STATUS
       */
