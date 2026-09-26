@@ -589,6 +589,24 @@ if (hasSensitiveParameter) {
     "Be careful before entering passwords, PINs, OTPs, or other personal information."
   );
 }
+    /*
+   EXCESSIVE PARAMETER DETECTOR
+*/
+
+const parameterCount = [...url.searchParams.keys()].length;
+
+if (parameterCount > 5) {
+
+  riskScore += 10;
+
+  warnings.push(
+    "The link contains an unusually large number of URL parameters."
+  );
+
+  actions.push(
+    "Check the link carefully and avoid entering sensitive information unless you trust the website."
+  );
+}  
       /*
         DETERMINE SECURITY STATUS
       */
