@@ -555,7 +555,40 @@ if (url.hostname.toLowerCase().includes("xn--")) {
           "Check where the link will take you before entering passwords or other sensitive information."
         );
       }
+/*
+   SENSITIVE PARAMETER DETECTOR
+*/
 
+const sensitiveParameters = [
+  "password",
+  "passwd",
+  "pass",
+  "username",
+  "user",
+  "email",
+  "otp",
+  "pin",
+  "token",
+  "session",
+  "auth"
+];
+
+const hasSensitiveParameter = sensitiveParameters.some(parameter =>
+  url.searchParams.has(parameter)
+);
+
+if (hasSensitiveParameter) {
+
+  riskScore += 10;
+
+  warnings.push(
+    "The link contains a parameter that may request or handle sensitive information."
+  );
+
+  actions.push(
+    "Be careful before entering passwords, PINs, OTPs, or other personal information."
+  );
+}
       /*
         DETERMINE SECURITY STATUS
       */
