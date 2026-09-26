@@ -833,13 +833,19 @@ if (
   actions.push(
     "Check the domain carefully and make sure it matches the website you intended to visit."
   );
-}/*
+}
+      /*
    URL SCHEME DETECTOR
 */
 
-const allowedSchemes = ["http:", "https:"];
+const originalSchemeMatch = link.match(/^([a-z][a-z0-9+.-]*):/i);
 
-if (!allowedSchemes.includes(url.protocol.toLowerCase())) {
+if (
+  originalSchemeMatch &&
+  !["http:", "https:"].includes(
+    originalSchemeMatch[1].toLowerCase()
+  )
+) {
   riskScore += 15;
 
   warnings.push(
@@ -850,7 +856,6 @@ if (!allowedSchemes.includes(url.protocol.toLowerCase())) {
     "Avoid opening the link unless you recognize and trust the application or service associated with it."
   );
     }
-      
       /*
         DETERMINE SECURITY STATUS
       */
