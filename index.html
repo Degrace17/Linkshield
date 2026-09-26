@@ -608,6 +608,26 @@ if (parameterCount > 5) {
   );
 }  
       /*
+   HYPHEN-HEAVY DOMAIN DETECTOR
+*/
+
+const hostname = url.hostname;
+
+const hyphenCount = (hostname.match(/-/g) || []).length;
+
+if (hyphenCount >= 3 && !isIpAddress(hostname)) {
+
+  riskScore += 10;
+
+  warnings.push(
+    "The website domain contains an unusually high number of hyphens."
+  );
+
+  actions.push(
+    "Check the domain carefully for misspellings or a look-alike website."
+  );
+}
+      /*
         DETERMINE SECURITY STATUS
       */
 
