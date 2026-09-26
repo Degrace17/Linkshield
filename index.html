@@ -782,8 +782,16 @@ if (link.includes("\\")) {
    MIXED-SCRIPT DOMAIN DETECTOR
 */
 
-const hasLatin = /[a-z]/i.test(url.hostname);
-const hasNonLatin = /[^\x00-\x7F]/.test(url.hostname);
+const originalHostnameMatch = link.match(
+  /^(?:https?:\/\/)?([^\/?#:]+)/
+);
+
+const originalHostname = originalHostnameMatch
+  ? originalHostnameMatch[1]
+  : "";
+
+const hasLatin = /[a-z]/i.test(originalHostname);
+const hasNonLatin = /[^\x00-\x7F]/.test(originalHostname);
 
 if (hasLatin && hasNonLatin) {
   riskScore += 10;
@@ -795,7 +803,7 @@ if (hasLatin && hasNonLatin) {
   actions.push(
     "Check the domain carefully and make sure every character belongs to the website you intended to visit."
   );
-  }
+    }
       /*
         DETERMINE SECURITY STATUS
       */
