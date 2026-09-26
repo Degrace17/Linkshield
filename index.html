@@ -779,6 +779,24 @@ if (link.includes("\\")) {
   );
 }  
       /*
+   MIXED-SCRIPT DOMAIN DETECTOR
+*/
+
+const hasLatin = /[a-z]/i.test(url.hostname);
+const hasNonLatin = /[^\x00-\x7F]/.test(url.hostname);
+
+if (hasLatin && hasNonLatin) {
+  riskScore += 10;
+
+  warnings.push(
+    "The website domain contains a mixture of Latin and non-Latin characters that may make the address harder to recognize."
+  );
+
+  actions.push(
+    "Check the domain carefully and make sure every character belongs to the website you intended to visit."
+  );
+  }
+      /*
         DETERMINE SECURITY STATUS
       */
 
