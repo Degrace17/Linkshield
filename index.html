@@ -746,6 +746,23 @@ if (hasSuspiciousTLD) {
     "Check the website name carefully and make sure you trust the domain before entering sensitive information."
   );
 }
+     /*
+   EXTREMELY LONG DOMAIN DETECTOR
+*/
+
+const domainLength = url.hostname.length;
+
+if (domainLength > 50) {
+  riskScore += 10;
+
+  warnings.push(
+    "The website domain is unusually long and may be harder to recognize."
+  );
+
+  actions.push(
+    "Check the domain carefully and make sure it belongs to the website you intended to visit."
+  );
+} 
       /*
         DETERMINE SECURITY STATUS
       */
