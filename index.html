@@ -337,7 +337,40 @@
       /*
         6. MANY SUBDOMAINS
       */
+// Suspicious trusted-name subdomain detector
+const trustedNames = [
+  "paypal",
+  "microsoft",
+  "google",
+  "facebook",
+  "amazon",
+  "apple",
+  "instagram",
+  "netflix",
+  "bank"
+];
 
+const hostnameLower = url.hostname.toLowerCase();
+const hostnamePartsLower = hostnameLower.split(".");
+
+if (hostnamePartsLower.length >= 3) {
+  const mainDomain = hostnamePartsLower
+    .slice(-2)
+    .join(".");
+
+  const subdomainParts = hostnamePartsLower.slice(0, -2);
+
+  const hasTrustedNameInSubdomain = trustedNames.some(name =>
+    subdomainParts.some(part => part.includes(name))
+  );
+
+  if (hasTrustedNameInSubdomain) {
+    riskScore += 20;
+    warnings.push(
+      "The link uses a familiar brand or service name in a subdomain instead of the main website domain."
+    );
+  }
+}
       const hostnameParts = url.hostname.split(".");
 
       if (
