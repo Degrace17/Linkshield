@@ -350,13 +350,9 @@ const trustedNames = [
   "bank"
 ];
 
-const hostnameLower = url.hostname.toLowerCase();
-const hostnamePartsLower = hostnameLower.split(".");
+const hostnamePartsLower = url.hostname.toLowerCase().split(".");
 
 if (hostnamePartsLower.length >= 3) {
-  const mainDomain = hostnamePartsLower
-    .slice(-2)
-    .join(".");
 
   const subdomainParts = hostnamePartsLower.slice(0, -2);
 
@@ -365,9 +361,15 @@ if (hostnamePartsLower.length >= 3) {
   );
 
   if (hasTrustedNameInSubdomain) {
+
     riskScore += 20;
+
     warnings.push(
       "The link uses a familiar brand or service name in a subdomain instead of the main website domain."
+    );
+
+    actions.push(
+      "Check the main domain carefully to make sure it belongs to the real website."
     );
   }
 }
