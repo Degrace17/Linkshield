@@ -874,10 +874,12 @@ if (
 */
 
 const originalSchemeMatch = link.match(/^([a-z][a-z0-9+.-]*):/i);
-
+!["http", "https"].includes(
+  originalSchemeMatch[1].toLowerCase()
+)
 if (
   originalSchemeMatch &&
-  !["http:", "https:"].includes(
+  
     originalSchemeMatch[1].toLowerCase()
   )
 ) {
