@@ -121,15 +121,57 @@ button:hover {
 
     <div class="card">
 
-      <input
-        type="text"
-        id="linkInput"
-        placeholder="Paste a link here..."
-      >
+      <div style="
+  margin-top:20px;
+">
 
-      <button type="button" onclick="checkLink()">
-  Check Link
-      </button>
+  <div style="
+    color:#9bb8dd;
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:1px;
+    margin-bottom:8px;
+  ">
+    🔍 LINK SECURITY SCANNER
+  </div>
+
+  <input
+    type="text"
+    id="linkInput"
+    placeholder="Paste a link here..."
+    style="
+      width:100%;
+      padding:16px;
+      background:#07152f;
+      color:white;
+      border:1px solid #24518c;
+      border-radius:14px;
+      outline:none;
+      font-size:15px;
+      margin-bottom:12px;
+    "
+  >
+
+  <button
+    type="button"
+    onclick="checkLink()"
+    style="
+      width:100%;
+      padding:16px;
+      background:#168cff;
+      color:white;
+      border:none;
+      border-radius:14px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(22,140,255,0.25);
+    "
+  >
+    🛡️ Check Link
+  </button>
+
+      </div>
 
       <div id="result">
         Your security report will appear here.
