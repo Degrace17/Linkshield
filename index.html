@@ -72,16 +72,26 @@
 
     button {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #168cff;
   color: white;
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s ease;
-    }
+  box-shadow: 0 6px 18px rgba(22, 140, 255, 0.25);
+}
+
+button:hover {
+  background: #0f7ee6;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: scale(0.98);
+}
 
     button:active {
       transform: scale(0.98);
