@@ -869,16 +869,16 @@ if (
   );
 }
       /*
-   URL SCHEME DETECTOR
+  URL SCHEME DETECTOR
 */
 
-const originalSchemeMatch = originalLink.match(/^([a-z][a-z0-9+.-]*):/i);
-!["http", "https"].includes(
-  originalSchemeMatch[1].toLowerCase()
-)
+const originalSchemeMatch = originalLink.match(
+  /^([a-z][a-z0-9+.-]*):/i
+);
+
 if (
   originalSchemeMatch &&
-  
+  !["http", "https"].includes(
     originalSchemeMatch[1].toLowerCase()
   )
 ) {
@@ -891,7 +891,7 @@ if (
   actions.push(
     "Avoid opening the link unless you recognize and trust the application or service associated with it."
   );
-    }
+}
       /*
         DETERMINE SECURITY STATUS
       */
