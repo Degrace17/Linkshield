@@ -781,13 +781,7 @@ if (url.hostname.toLowerCase().includes("xn--")) {
       }
 
 
-  /*
-        LIMIT SCORE TO 100
-      */
-
-      if (riskScore > 100) {
-        riskScore = 100;
-      }
+  
 /*
         REDIRECT DETECTOR
       */
@@ -1124,6 +1118,13 @@ if (
     "Avoid opening the link unless you recognize and trust the application or service associated with it."
   );
 }
+      /*
+  FINAL SCORE LIMIT
+*/
+
+if (riskScore > 100) {
+  riskScore = 100;
+    }
       /*
         DETERMINE SECURITY STATUS
       */
