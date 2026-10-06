@@ -380,67 +380,69 @@ function scanAnotherLink() {
 
   linkInput.focus();
 }
-    function checkLink(isscancomplete= false) {
+    function checkLink(isScanComplete = false) {
 
-      const linkInput = document.getElementById("linkInput");
-      const result = document.getElementById("result");
+  const linkInput = document.getElementById("linkInput");
+  const result = document.getElementById("result");
 
-      let link = linkInput.value.trim();
-      if (!isScanComplete) {
+  let link = linkInput.value.trim();
 
-        if (link === "") {
-          result.innerHTML = `
-            <div style="
-              color:orange;
-              font-weight:bold;
-              font-size:18px;
-            ">
-              ⚠️ Please enter a link first.
-            </div>
-          `;
+  if (!isScanComplete) {
 
-          return;
-        }
+    if (link === "") {
+      result.innerHTML = `
+        <div style="
+          color:orange;
+          font-weight:bold;
+          font-size:18px;
+        ">
+          ⚠️ Please enter a link first.
+        </div>
+      `;
 
-        result.innerHTML = `
-          <div style="
-            text-align:center;
-            padding:20px 0;
-          ">
+      return;
+    }
 
-            <div style="
-              font-size:32px;
-              margin-bottom:12px;
-            ">
-              🔍
-            </div>
+    result.innerHTML = `
+      <div style="
+        text-align:center;
+        padding:20px 0;
+      ">
 
-            <div style="
-              color:#168cff;
-              font-size:20px;
-              font-weight:bold;
-              margin-bottom:8px;
-            ">
-              Checking link...
-            </div>
+        <div style="
+          font-size:32px;
+          margin-bottom:12px;
+        ">
+          🔍
+        </div>
 
-            <div style="
-              color:#9bb8dd;
-              font-size:14px;
-            ">
-              Analyzing security signals
-            </div>
+        <div style="
+          color:#168cff;
+          font-size:20px;
+          font-weight:bold;
+          margin-bottom:8px;
+        ">
+          Checking link...
+        </div>
 
-          </div>
-        `;
+        <div style="
+          color:#9bb8dd;
+          font-size:14px;
+        ">
+          Analyzing security signals
+        </div>
 
-        setTimeout(() => {
-          checkLink(true);
-        }, 700);
+      </div>
+    `;
 
-        return;
-      }
-const originalLink = link;
+    setTimeout(() => {
+      checkLink(true);
+    }, 700);
+
+    return;
+  }
+
+  const originalLink = link;
       // Check if empty
       if (link === "") {
 
