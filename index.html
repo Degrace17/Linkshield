@@ -1520,29 +1520,45 @@ ${securityChecksHTML}
 
 
           <div style="
-  background:#07152f;
+  background:linear-gradient(145deg,#0b2348,#07152f);
   border:1px solid #24518c;
-  border-radius:16px;
-  padding:18px;
-  margin:15px 0 25px;
+  border-radius:18px;
+  padding:20px;
+  margin:15px 0 20px;
   text-align:center;
+  box-shadow:0 8px 24px rgba(0,0,0,0.22);
 ">
 
   <div style="
-    color:#9bb8dd;
-    font-size:13px;
-    letter-spacing:1px;
-    margin-bottom:6px;
+    color:#8fb2dc;
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:1.5px;
+    margin-bottom:8px;
   ">
     RISK SCORE
   </div>
 
   <div style="
     color:${color};
-    font-size:32px;
+    font-size:36px;
+    font-weight:700;
+    line-height:1;
+    margin-bottom:8px;
+  ">
+    ${riskScore}<span style="
+      color:#7895bb;
+      font-size:18px;
+      font-weight:normal;
+    ">/100</span>
+  </div>
+
+  <div style="
+    color:${color};
+    font-size:13px;
     font-weight:bold;
   ">
-    ${riskScore}/100
+    ${status}
   </div>
 
 </div>
