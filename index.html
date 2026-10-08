@@ -1191,6 +1191,111 @@ if (riskScore > 100) {
   riskScore = 100;
     }
       /*
+  SECURITY CHECKS BREAKDOWN
+*/
+
+const securityChecks = [
+
+  {
+    name: "Secure connection",
+    safe: url.protocol === "https:"
+  },
+
+  {
+    name: "Domain structure",
+    safe: !(
+      isIpAddress(url.hostname) ||
+      foundLookAlike ||
+      hasSuspiciousDomainPattern
+    )
+  },
+
+  {
+    name: "Suspicious URL patterns",
+    safe: !(
+      url.href.includes("@") ||
+      foundWords.length > 0 ||
+      url.href.length > 150 ||
+      hyphenCount >= 3 ||
+      hasSuspiciousFragment
+    )
+  },
+
+  {
+    name: "Redirect & parameter checks",
+    safe: !(
+      hasRedirectParameter ||
+      hasSensitiveParameter ||
+      parameterCount > 5 ||
+      hasDuplicateParameter
+    )
+  },
+
+  {
+    name: "File & destination checks",
+    safe: !(
+      hasSuspiciousFile ||
+      shortenerDomains.some(domain =>
+        url.hostname.toLowerCase() === domain ||
+        url.hostname.toLowerCase().endsWith("." + domain)
+      ) ||
+      hasSuspiciousTLD
+    )
+  }
+
+];
+
+const securityChecksHTML = `
+  <div style="
+    background:#07152f;
+    border:1px solid #24518c;
+    border-radius:16px;
+    padding:18px;
+    margin:15px 0 25px;
+  ">
+
+    <div style="
+      color:#9bb8dd;
+      font-size:13px;
+      font-weight:bold;
+      letter-spacing:1px;
+      margin-bottom:14px;
+    ">
+      SECURITY CHECKS
+    </div>
+
+    ${securityChecks.map(check => `
+      <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        padding:10px 0;
+        border-bottom:1px solid rgba(36,81,140,0.35);
+      ">
+
+        <div style="
+          color:#dbeafe;
+          font-size:14px;
+        ">
+          ${check.name}
+        </div>
+
+        <div style="
+          color:${check.safe ? "#32d583" : "#ffae42"};
+          font-size:13px;
+          font-weight:bold;
+          white-space:nowrap;
+        ">
+          ${check.safe ? "✓ PASS" : "⚠ REVIEW"}
+        </div>
+
+      </div>
+    `).join("")}
+
+  </div>
+`;
+      /*
         DETERMINE SECURITY STATUS
       */
 
@@ -1344,13 +1449,11 @@ if (riskScore > 100) {
                 ${link}
               </div>
 
-            </div>
-            <p style="
-              color:#dbeafe;
-              line-height:1.7;
-            ">
-              ${explanation}
-            </p>
+</div>
+
+${securityChecksHTML}
+
+
 
             <p style="
               color:#9bb8dd;
@@ -1536,6 +1639,7 @@ if (riskScore > 100) {
             </div>
 
           </div>
+          ${securityChecksHTML}
           <h3 style="
             color:#168cff;
             margin-bottom:8px;
