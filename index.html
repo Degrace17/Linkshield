@@ -1196,52 +1196,57 @@ if (riskScore > 100) {
 
 const securityChecks = [
 
-  {
-    name: "Secure connection",
-    safe: url.protocol === "https:"
-  },
+{
+name: "Connection security",
+safe: url.protocol === "https:"
+},
 
-  {
-    name: "Domain structure",
-    safe: !(
-      isIpAddress(url.hostname) ||
-      foundLookAlike ||
-      hasSuspiciousDomainPattern
-    )
-  },
+{
+name: "Domain identity",
+safe: !(
+isIpAddress(url.hostname) ||
+foundLookAlike ||
+hasSuspiciousDomainPattern ||
+hostnamePartsLower.length > 4 ||
+hasSuspiciousTLD ||
+hasLatin && hasNonLatin
+)
+},
 
-  {
-    name: "Suspicious URL patterns",
-    safe: !(
-      url.href.includes("@") ||
-      foundWords.length > 0 ||
-      url.href.length > 150 ||
-      hyphenCount >= 3 ||
-      hasSuspiciousFragment
-    )
-  },
+{
+name: "Suspicious URL patterns",
+safe: !(
+url.href.includes("@") ||
+foundWords.length > 0 ||
+url.href.length > 150 ||
+hyphenCount >= 3 ||
+hasSuspiciousFragment ||
+url.port !== "" &&
+!["80", "443"].includes(url.port)
+)
+},
 
-  {
-    name: "Redirect & parameter checks",
-    safe: !(
-      hasRedirectParameter ||
-      hasSensitiveParameter ||
-      parameterCount > 5 ||
-      hasDuplicateParameter
-    )
-  },
+{
+name: "Redirects & parameters",
+safe: !(
+hasRedirectParameter ||
+hasSensitiveParameter ||
+parameterCount > 5 ||
+hasDuplicateParameter
+)
+},
 
-  {
-    name: "File & destination checks",
-    safe: !(
-      hasSuspiciousFile ||
-      shortenerDomains.some(domain =>
-        url.hostname.toLowerCase() === domain ||
-        url.hostname.toLowerCase().endsWith("." + domain)
-      ) ||
-      hasSuspiciousTLD
-    )
-  }
+{
+name: "Destination & downloads",
+safe: !(
+hasSuspiciousFile ||
+shortenerDomains.some(domain =>
+url.hostname.toLowerCase() === domain ||
+url.hostname.toLowerCase().endsWith("." + domain)
+) ||
+doubleExtensionPattern.test(path)
+)
+}
 
 ];
 
