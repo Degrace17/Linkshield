@@ -1413,7 +1413,7 @@ const securityChecksHTML = `
                 color:#dbeafe;
                 font-size:14px;
               ">
-                ✅ 0 warning signs detected
+                
               </div>
 
               <div style="
@@ -1424,7 +1424,7 @@ const securityChecksHTML = `
               ">
                 LinkShield analyzed the URL structure and security signals.
               </div>
-
+⚠️ ${warnings.length} warning ${warnings.length === 1 ? "sign" : "signs"} detected
             </div>
             <div style="
               background:#07152f;
